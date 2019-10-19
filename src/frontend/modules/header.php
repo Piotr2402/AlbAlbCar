@@ -7,6 +7,8 @@
     <title>AlbAlbCar</title>
     <link rel="stylesheet" href="./css/bootstrap.css">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/glyphicon.css">
+    <link rel="stylesheet" href="http://inzynierka.ct8.pl/css/datepicker.min.css">
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
 </head>

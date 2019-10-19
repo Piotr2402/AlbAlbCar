@@ -48,6 +48,54 @@
     cursor: pointer;
 }
 
+#new-ride {
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    background: #efefef;
+    padding: 30px;
+}
+#new-ride select, #new-ride input {
+    max-width: 400px;
+    display: block;
+    margin: 0 auto;
+}
+#new-ride .add-via-place {
+    cursor: pointer;
+}
+#start-time-calendar {
+    display: none;
+    margin-top: 10px;
+}
+.via-place {
+    box-shadow: 0 0 10px #777;
+    border-radius: 10px;
+    padding: 5px 10px;
+    max-width: 400px;
+    margin: 0 auto 10px;
+    position: relative;
+}
+.via-place-remove {
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    cursor: pointer;
+}
+h3.main-header {
+    text-align: center;
+    font-size: 22px;
+    text-transform: uppercase;
+}
+
+@media(max-width: 767px) {
+    #rides h3, #rides h4 {
+        font-size: 20px;
+    }
+    #rides {
+        padding: 10px;
+    }
+    #rides .ride {
+        padding: 5px 10px;
+    }
+}
 @media (min-width: 992px) {
 
     .navbar-brand {

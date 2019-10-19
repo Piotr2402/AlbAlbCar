@@ -19,13 +19,14 @@
             <option value="<?=$id?>"><?=$city?></option>
         <?php } ?>
     </select>
-    <p class="mt-3 mb-0">W którym dniu szukasz przejazdu?</p>
-    <input id="departure-datetime" type="text" name="departure-datetime" class="text-center" readonly value="<?= date("Y-m-d") ?>" />
+    <p class="mt-3 mb-0">Od której szukasz przejazdu?</p>
+    <input id="start-time" type="text" name="departure-datetime" class="text-center" readonly value="<?= date("Y-m-d H:i") ?>" />
+    <div id="start-time-calendar" data-timepicker="true" data-language='en'></div>
     <input type="submit" class="d-block mx-auto btn btn-dark mt-3" value="Szukaj!">
 </form>
 
-<div id="rides" class=" mt-5">
-    <div class="ride d-flex">
+<div id="rides" class="mt-5">
+    <div class="ride d-flex flex-column flex-md-row">
         <div class="left-col d-flex flex-column">
             <h3>2019-10-17 21:00</h3>
             <p>login123</p>
@@ -34,10 +35,10 @@
         </div>
         <div class="right-col d-flex flex-column justify-content-around align-items-end">
             <h4>23zł</h4>
-            <div class="btn btn-dark" data-rideid="11">Rezerwuj</div>
+            <div class="ride-reservation btn btn-dark" data-rideid="11">Rezerwuj</div>
         </div>
     </div>
-    <div class="ride d-flex">
+    <div class="ride d-flex flex-column flex-md-row">
         <div class="left-col d-flex flex-column">
             <h3>2019-10-17 22:00</h3>
             <p>login123</p>
@@ -46,9 +47,8 @@
         </div>
         <div class="right-col d-flex flex-column justify-content-around align-items-end">
             <h4>23zł</h4>
-            <div class="btn btn-dark" data-rideid="12">Rezerwuj</div>
+            <div class="ride-reservation btn btn-dark" data-rideid="12">Rezerwuj</div>
         </div>
     </div>
 </div>
-
 <?php require_once('modules/footer.php'); ?>

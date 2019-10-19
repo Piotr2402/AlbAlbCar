@@ -1,21 +1,44 @@
-$.datepicker.regional['pl'] = {
-    closeText: 'Zamknij',
-    prevText: '&#x3C;Poprzedni',
-    nextText: 'Następny&#x3E;',
-    currentText: 'Dziś',
-    monthNames: ['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'],
-    monthNamesShort: ['Sty','Lu','Mar','Kw','Maj','Cze','Lip','Sie','Wrz','Pa','Lis','Gru'],
-    dayNames: ['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota'],
-    dayNamesShort: ['Nie','Pn','Wt','Śr','Czw','Pt','So'],
-    dayNamesMin: ['N','Pn','Wt','Śr','Cz','Pt','So'],
-    weekHeader: 'Tydz',
-    dateFormat: 'yy-mm-dd',
-    firstDay: 1,
-    isRTL: false,
-    showMonthAfterYear: false,
-    yearSuffix: ''};
-$.datepicker.setDefaults($.datepicker.regional['pl']);
+$(document).on("click", ".ride-reservation", function(e) {
+    alert($(this).attr("data-rideid"));
+});
 
-$("#departure-datetime").datepicker({
-    minDate: new Date()
+$("#start-time").on('click', function() {
+    $('#start-time-calendar').slideDown();
+});
+$('#start-time-calendar').datepicker({
+    minDate: new Date(),
+    onSelect: function (fd, d, picker) {
+        var date = (d.getDate() < 10) ? ("0" + d.getDate()) : (d.getDate());
+        var month = ((d.getMonth()+1) < 10) ? ("0" + (d.getMonth()+1)) : ((d.getMonth()+1));
+        var hours = (d.getHours() < 10) ? ("0" + d.getHours()) : (d.getHours());
+        var minutes = (d.getMinutes() < 10) ? ("0" + d.getMinutes()) : (d.getMinutes());
+
+        $('#start-time').val((d.getYear()+1900) + '-' + month + '-' + date + ' ' + hours + ':' + minutes );
+    }
+});
+$('#start-time-calendar').data('datepicker');
+
+
+$(".time").on('click', function() {
+    $(this).parent().find('.time-calendar').slideDown();
+});
+$('.time-calendar').datepicker({
+    minDate: new Date(),
+    onSelect: function (fd, d, picker) {
+        var date = (d.getDate() < 10) ? ("0" + d.getDate()) : (d.getDate());
+        var month = ((d.getMonth()+1) < 10) ? ("0" + (d.getMonth()+1)) : ((d.getMonth()+1));
+        var hours = (d.getHours() < 10) ? ("0" + d.getHours()) : (d.getHours());
+        var minutes = (d.getMinutes() < 10) ? ("0" + d.getMinutes()) : (d.getMinutes());
+
+        $(this).parent().find('.time').val((d.getYear()+1900) + '-' + month + '-' + date + ' ' + hours + ':' + minutes );
+    }
+});
+$('.time-calendar').data('datepicker');
+
+$(document).on("click", ".via-place-remove", function(e) {
+    $(this).parent().remove();
+});
+
+$(".add-via-place").on('click', function() {
+    $('.via-places').append($('<div>').addClass("via-place").append($(".via-place-pattern").html()));
 });

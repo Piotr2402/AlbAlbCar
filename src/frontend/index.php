@@ -28,8 +28,8 @@
                 <input type="text" class="form-control" name="login" placeholder="Twój login">
             </div>
             <div class="form-group">
-                <label for="mail">Adres email</label>
-                <input type="email" class="form-control" name="mail" placeholder="Adres email">
+                <label for="phone">Telefon</label>
+                <input type="tel" class="form-control" name="phone" placeholder="Telefon">
             </div>
             <div class="form-group">
                 <label for="password">Hasło</label>
