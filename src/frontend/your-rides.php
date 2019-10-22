@@ -22,7 +22,7 @@
             <div class="d-flex flex-column">
                 <h3>2019-11-17 22:00</h3>
                 <p class="font-weight-bold">Warszawa - Katowice</p>
-                <p>Kierowca: login233</p>
+                <p>Kierowca: login233 <a href="tel:123123123">[123123123]</a></p>
                 <p class="font-weight-bold">Cena: 25zł</p>
                 <div class="btn btn-danger mt-2 cancel-ride" data-rideid="24">Anuluj przejazd</div>
             </div>
@@ -31,7 +31,7 @@
             <div class="d-flex flex-column">
                 <h3>2019-10-17 22:00</h3>
                 <p class="font-weight-bold">Warszawa - Katowice</p>
-                <p>Kierowca: login233</p>
+                <p>Kierowca: login233 <a href="tel:123123123">[123123123]</a></p>
                 <p class="font-weight-bold">Cena: 25zł</p>
             </div>
         </div>
