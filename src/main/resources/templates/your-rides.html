@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AlbAlbCar</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="http://inzynierka.ct8.pl/css/datepicker.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+	<script src="http://inzynierka.ct8.pl/js/datepicker.min.js" ></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="../static/js/script.js" th:href="@{/js/script.js}"></script>
+</head>
+<body>
+<th:block th:include="/_header"></th:block>
+<div class="row">
+    <div class="col-md-6">
+        <h3 class="main-header">Stworzone przejazdy</h3>
+        <div class="ride">
+            <div class="d-flex flex-column">
+                <h3>#24</h3>
+                <p class="font-weight-bold">Warszawa (2019-10-17 21:00) - Poznań (2019-10-17 23:00) - Katowice</p>
+                <p>Wolnych miejsc: 0</p>
+                 <p><span class="font-weight-bold">Uczestnicy:</span><br>
+                    login123 (Warszawa - Poznań) [<a href="tel:504212222">504212222</a>]: 12zł<br>
+                    login122213 (Warszawa - Katowice) [<a href="tel:504212222">501212312</a>]: 25zł<br>
+                        login122213 (Poznań - Katowice) [<a href="tel:504212222">504222144</a>]: 13zł
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h3 class="main-header mt-4 mt-md-0">Jako pasażer</h3>
+
+        <div class="ride">
+            <div class="d-flex flex-column">
+                <h3>2019-11-17 22:00</h3>
+                <p class="font-weight-bold">Warszawa - Katowice</p>
+                <p>Kierowca: login233 <a href="tel:123123123">[123123123]</a></p>
+                <p class="font-weight-bold">Cena: 25zł</p>
+                <div class="btn btn-danger mt-2 cancel-ride" data-rideid="24">Anuluj przejazd</div>
+            </div>
+        </div>
+        <div class="ride">
+            <div class="d-flex flex-column">
+                <h3>2019-10-17 22:00</h3>
+                <p class="font-weight-bold">Warszawa - Katowice</p>
+                <p>Kierowca: login233 <a href="tel:123123123">[123123123]</a></p>
+                <p class="font-weight-bold">Cena: 25zł</p>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="/_footer"></th:block>
+</body>
+</html>

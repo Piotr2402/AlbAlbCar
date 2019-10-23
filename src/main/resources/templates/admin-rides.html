@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AlbAlbCar</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="../static/css/admin-style.css" th:href="@{/css/admin-style.css}">
+    <link rel="stylesheet" href="http://inzynierka.ct8.pl/css/datepicker.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+	<script src="http://inzynierka.ct8.pl/js/datepicker.min.js" ></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="../static/js/script.js" th:href="@{/js/script.js}"></script>
+</head>
+<body>
+<th:block th:include="/_admin-header"></th:block>
+<form action="endpoints/ride-search" class="mb-5">
+    <p class="mt-2 mb-0 text-center">Szukaj po loginie kierowcy</p>
+    <input type="text" class="form-control" name="login" />
+    <input type="submit" class="btn btn-dark mt-2 mx-auto d-flex" value="Szukaj">
+</form>
+<table>
+    <thead>
+        <tr>
+            <td>#</td>
+            <td>Kierowca</td>
+            <td>Data wyjazdu</td>
+            <td>Trasa</td>
+            <td>PasaĹĽerowie</td>
+            <td>Akcje</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>login123</td>
+            <td><?= date("Y-m-d H:i:s") ?></td>
+            <td>WrocĹ‚aw - Warszawa</td>
+            <td>login1234</td>
+            <td><a href="">UsuĹ„</a></td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

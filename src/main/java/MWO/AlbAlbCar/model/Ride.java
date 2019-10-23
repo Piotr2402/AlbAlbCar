@@ -1,9 +1,15 @@
 package MWO.AlbAlbCar.model;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -12,19 +18,75 @@ import javax.persistence.Table;
 public class Ride {
 
 	@Id
-	private int rideID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ride_id")
+	private int rideId;
 	
-	@OneToMany(targetEntity= Ride_city.class, mappedBy = "ride")
-	private Set<Ride_city> rides;
+	@ManyToOne
+    @JoinColumn(name="driver", nullable=false)
+	private User driver;
+	
+	@Column(name = "seats")
+	private int seats;
+	
+	@Column(name = "ride_date")
+	private String rideDate;
+	
+	@OneToMany(mappedBy = "ride")
+	private List<RideCity> cities = new ArrayList<RideCity>();
+	
+	@OneToMany(mappedBy = "ride")
+	private List<RidesUsers> users = new ArrayList<RidesUsers>();
 
 	public Ride() {
 	}
-	
-	public Set<Ride_city> getRideID() {
-		return rides;
+
+	public int getRideId() {
+		return rideId;
 	}
 
-	public void setRideID(Set<Ride_city> ride) {
-		this.rides = ride;
+	public void setRideId(int rideId) {
+		this.rideId = rideId;
 	}
+
+	public User getDriver() {
+		return driver;
+	}
+
+	public void setDriver(User driver) {
+		this.driver = driver;
+	}
+
+	public int getSeats() {
+		return seats;
+	}
+
+	public void setSeats(int seats) {
+		this.seats = seats;
+	}
+
+	public String getRideDate() {
+		return rideDate;
+	}
+
+	public void setRideDate(String rideDate) {
+		this.rideDate = rideDate;
+	}
+
+	public List<RideCity> getCities() {
+		return cities;
+	}
+
+	public void setCities(List<RideCity> cities) {
+		this.cities = cities;
+	}
+
+	public List<RidesUsers> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<RidesUsers> users) {
+		this.users = users;
+	}
+
 }

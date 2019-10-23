@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AlbAlbCar</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="http://inzynierka.ct8.pl/css/datepicker.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway&display=swap">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+	<script src="http://inzynierka.ct8.pl/js/datepicker.min.js" ></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="../static/js/script.js" th:href="@{/js/script.js}"></script>
+</head>
+<body>
+<th:block th:include="/_header"></th:block>
+<form method="post" action="endpoints/new-ride.php" id="new-ride" class="text-center">
+    <h4 class="mb-4">Dodaj nowy przejazd</h4>
+    <p class="mb-0">Skąd ruszasz?</p>
+    <select class="custom-select" name="assembly-place">
+            <option value="1">Miasto</option>
+    </select>
+    <p class="mt-2 mb-0">Ilość miejsc</p>
+    <select class="custom-select" name="places-amount">
+        <option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+		<option value="7">7</option>
+		<option value="8">8</option>
+		<option value="9">9</option>
+		<option value="10">10</option>
+    </select>
+    <p class="mt-2 mb-0">Cena za miejsce</p>
+    <input type="text" class="form-control" name="price" />
+    <p class="mt-2 mb-0">Godzina wyjazdu</p>
+    <div>
+        <div class="time"></div>
+        <div class="time-calendar"  data-timepicker="true" data-language='en'></div>
+    </div>
+
+    <div class="btn btn-outline-dark mt-4 mb-3 add-via-place">Dodaj miejsce pośrednie</div>
+    <div class="via-places"></div>
+
+    <p class="mt-3 mb-0">Dokąd jedziesz?</p>
+    <select class="custom-select d-block mx-auto" name="destination-place">
+        <option value="1">Miasto</option>
+    </select>
+    <input type="submit" class="btn btn-dark mt-2" value="Dodaj przejazd">
+</form>
+
+<div class="via-place-pattern d-none">
+    <div class="via-place-remove">⨉</div>
+    <p class="mb-0">Miejsce pośrednie</p>
+    <select class="custom-select via-place-city">
+        <option value="1">Miasto</option>
+    </select>
+    <p class="mt-2 mb-0">Czas dotarcia od początku jazdy</p>
+    <select class="custom-select via-place-time">
+        <?php for($i=10; $i<=720; $i+=10) { ?>
+            <option value="<?=$i?>"><?= $i<60 ? '' : ((int)($i/60) . 'h') ?> <?= $i%60 ?>min</option>
+        <?php } ?>
+    </select>
+    <p class="mt-2 mb-0">Cena do miejsca docelowego</p>
+    <input type="text" class="form-control via-place-price" />
+</div>
+<th:block th:include="/_footer"></th:block>
+</html>

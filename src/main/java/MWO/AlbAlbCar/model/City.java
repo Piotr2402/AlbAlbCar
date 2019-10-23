@@ -1,33 +1,43 @@
 package MWO.AlbAlbCar.model;
 
-import java.util.Set;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "cities")
 public class City {
 
-	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
+	
+	@Column(name = "city_name")
 	private String cityName;
 	
-	@OneToMany(targetEntity= Ride_city.class, mappedBy = "city")
-	private Set<Ride_city> rides;
+	public City() {}
 	
-	City() {	
+	public City(String name) {
+		this.cityName = name;
 	}
 
-	public Set<Ride_city> getCityName() {
-		return rides;
+	public int getId() {
+		return id;
 	}
-	public void setCityName(Set<Ride_city> rides) {
-		this.rides = rides;
+
+	public void setId(int id) {
+		this.id = id;
 	}
-	
-	
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
 }

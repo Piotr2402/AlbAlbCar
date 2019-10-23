@@ -9,10 +9,13 @@ import javax.persistence.*;
 public class Role {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "role_id")
 	private int RoleID;
+	@Column(name = "user_role")
 	private String userRole;
 	
-	@ManyToMany (targetEntity = User.class, mappedBy = "roles")
+	@ManyToMany(mappedBy = "roles")
 	private Set<User> users;
 
 	public Role() {
