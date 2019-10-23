@@ -9,5 +9,5 @@ public class MainController {
 	@GetMapping(value = "/") 
 	public String index() {
 		return "index";
-	}
+	} 
 }
