@@ -1,7 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: kubag_000
- * Date: 22.10.2019
- * Time: 11:58
- */
+session_start();
+include("../modules/utilities.php");
+
+if(!isset($_POST['login'])) {
+    header("location: ../index.php");
+    exit();
+}
+
+$url = 'http://localhost:8080/admin-users';
+$req = [
+    'login' => $_POST['login']
+];
+
+$result = utilities::post($url, $req);
+
+echo $result;

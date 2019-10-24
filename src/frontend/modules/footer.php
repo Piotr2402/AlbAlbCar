@@ -6,6 +6,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="js/script.js"></script>
 
+
 <footer class="bg-dark">
 <p class="text-light py-4 text-center mb-0">&copy; AlbAlbCar <?= date("Y") ?></p>
 </footer>

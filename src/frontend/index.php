@@ -16,7 +16,7 @@
                 <label for="password">Hasło</label>
                 <input type="password" class="form-control" name="password" placeholder="Hasło">
             </div>
-            <div id="login-info" class="form-text text-danger">We'll never share your email with anyone else.</div>
+            <div id="login-info" class="form-text text-danger"></div>
             <input type="submit" class="btn btn-dark mx-auto mt-2 px-4" value="Logowanie" />
         </form>
     </div>

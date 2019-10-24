@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -30,9 +31,11 @@
             <li class="nav-item">
                 <a class="nav-link text-center" href="admin-users">Uzytkownicy</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-center" href="endpoints/logout">Wyloguj (login123)</a>
-            </li>
+            <?php if(isset($_SESSION['admin'])) { ?>
+                <li class="nav-item">
+                    <a class="nav-link text-center" href="endpoints/logout">Wyloguj (<?= $_SESSION['admin'] ?>)</a>
+                </li>
+            <?php } ?>
         </ul>
     </div>
 </nav>

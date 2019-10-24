@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -34,9 +35,11 @@
             <li class="nav-item">
                 <a class="nav-link text-center" href="your-rides">Twoje trasy</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-center" href="endpoints/logout">Wyloguj (login123)</a>
-            </li>
+            <?php if(isset($_SESSION['login'])) { ?>
+                <li class="nav-item">
+                    <a class="nav-link text-center" href="endpoints/logout">Wyloguj (<?= $_SESSION['login'] ?>)</a>
+                </li>
+            <?php } ?>
         </ul>
     </div>
 </nav>

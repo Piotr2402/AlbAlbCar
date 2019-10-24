@@ -42,3 +42,22 @@ $(document).on("click", ".via-place-remove", function(e) {
 $(".add-via-place").on('click', function() {
     $('.via-places').append($('<div>').addClass("via-place").append($(".via-place-pattern").html()));
 });
+
+function formSubmit(data, endpoint, destination) {
+    $.post({
+        type: "POST",
+        url: "endpoints/" + endpoint + ".php",
+        data: {
+            login: data
+        },
+    }).always(function(text) {
+        $(destination).text(text);
+    });
+}
+
+$("#admin-rides-search").on('click', function(e) {
+    console.log($("#admin-rides-input").val());
+    e.stopPropagation();
+    e.preventDefault();
+    formSubmit($("#admin-rides-input").val(), 'ride-search', $("#admin-rides-search-result"));
+});
