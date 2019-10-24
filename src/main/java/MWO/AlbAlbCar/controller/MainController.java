@@ -42,7 +42,9 @@ public class MainController {
 	} 
 	
 	@GetMapping(value = "/new-ride") 
-	public String newRide() {
+	public String newRide(Model model) {
+		List<City> cities = cityRepository.findAll();
+		model.addAttribute("cities", cities);
 		return "new-ride";
 	} 
 	
