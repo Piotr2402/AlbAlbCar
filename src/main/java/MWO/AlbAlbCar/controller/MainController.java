@@ -1,7 +1,12 @@
 package MWO.AlbAlbCar.controller;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
@@ -15,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import MWO.AlbAlbCar.model.City;
+import MWO.AlbAlbCar.model.Ride;
 import MWO.AlbAlbCar.model.Role;
 import MWO.AlbAlbCar.model.User;
 import MWO.AlbAlbCar.repository.CityRepository;
+import MWO.AlbAlbCar.repository.RideRepository;
 import MWO.AlbAlbCar.repository.UserRepository;
 
 @Controller
@@ -29,6 +36,9 @@ public class MainController {
 	@Autowired
 	CityRepository cityRepository; 
 	
+	@Autowired
+	RideRepository rideRepository; 
+	
 	@GetMapping(value = "/") 
 	public String index() {
 		return "index";
@@ -38,6 +48,13 @@ public class MainController {
 	public String drive(Model model) {
 		List<City> cities = cityRepository.findAll();
 		model.addAttribute("cities", cities);
+		model.addAttribute("selected1", "1");
+		model.addAttribute("selected2", "1");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").withLocale(Locale.getDefault())
+	            .withZone(ZoneId.systemDefault());;
+		Instant now = Instant.now();
+        String formatted = formatter.format(now);
+		model.addAttribute("selectedDate", formatted);
 		return "drive";
 	} 
 	
@@ -78,10 +95,24 @@ public class MainController {
 	}
 	
 	@PostMapping(value = "/search-trip")
-	public String searchTrip(@RequestParam String assembly_place,@RequestParam String destination_place,
+	public String searchTrip(@RequestParam int assembly_place,@RequestParam int destination_place,
 			@RequestParam String departure_datetime, Model model) {	
-		System.out.println(assembly_place+" "+destination_place+" "+departure_datetime);
-		return "redirect:/drive";
+		List<Ride> rides = rideRepository.getRidesFromAToB(assembly_place, destination_place, departure_datetime);
+		model.addAttribute("rides", rides);
+		List<City> cities = cityRepository.findAll();
+		model.addAttribute("cities", cities);
+		model.addAttribute("freeSeats", "3");
+		model.addAttribute("price", "24 zl");
+		model.addAttribute("selected1", assembly_place);
+		model.addAttribute("selected2", destination_place);
+		model.addAttribute("selectedDate", departure_datetime);
+		return "drive";
+	}
+	
+	@PostMapping(value = "/reserve-trip")
+	public String reserveTrip(@RequestParam int assembly_place,@RequestParam int destination_place) {
+		System.out.println(assembly_place+" "+destination_place);
+		return "your-rides";
 	}
 	
 }

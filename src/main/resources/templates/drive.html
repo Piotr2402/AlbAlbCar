@@ -46,41 +46,29 @@
 		<h4 class="mb-4">Znajdź swój przejazd!</h4>
 		<p class="mb-0">Skąd ruszasz?</p>
 		<select class="custom-select" name="assembly_place">
-            <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.cityName}"></option>
+            <option id="assembly_place" th:each="city : ${cities}" th:value="${city.id}" th:text="${city.cityName}" th:selected="${city.id==selected1}"></option>
 		</select>
 		<p class="mt-3 mb-0">Dokąd jedziesz?</p>
 		<select class="custom-select" name="destination_place">
-			<option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.cityName}"></option>
+			<option id="destination_place" th:each="city : ${cities}" th:value="${city.id}" th:text="${city.cityName}" th:selected="${city.id==selected2}"></option>
 		</select>
 		<p class="mt-3 mb-0">Od której szukasz przejazdu?</p>
-		<input id="start-time" type="text" name="departure_datetime" class="text-center" readonly value="2019-01-01 21:21" />
+		<input id="start-time" type="text" name="departure_datetime" class="text-center" readonly th:value="${selectedDate}" />
 		<div id="start-time-calendar" data-timepicker="true" data-language='en'></div>
 		<input type="submit" class="d-block mx-auto btn btn-dark mt-3" value="Szukaj!">
 	</form>
 
 	<div id="rides" class="mt-5">
-		<div class="ride d-flex flex-column flex-md-row">
+		<div class="ride d-flex flex-column flex-md-row" th:each="ride : ${rides}">
 			<div class="left-col d-flex flex-column">
-				<h3>2019-10-17 21:00</h3>
-				<p>login123</p>
-				<p class="font-weight-bold">Warszawa - Poznań - Katowice</p>
-				<p>Wolnych miejsc: 4</p>
+				<h3 th:text="${ride.rideDate}"></h3>
+				<p th:text="${ride.driver.login}"></p>
+				<p class="font-weight-bold" th:each="city : ${ride.cities}" th:text="${city.city.cityName+' '+city.price+' zl '+city.delay+' min'}"></p>
+				<p th:text="${'Wolnych miejsc: '+freeSeats}"></p>
 			</div>
 			<div class="right-col d-flex flex-column justify-content-around align-items-end">
-				<h4>23zł</h4>
-				<div class="ride-reservation btn btn-dark" data-rideid="11">Rezerwuj</div>
-			</div>
-		</div>
-		<div class="ride d-flex flex-column flex-md-row">
-			<div class="left-col d-flex flex-column">
-				<h3>2019-10-17 22:00</h3>
-				<p>login123</p>
-				<p class="font-weight-bold">Warszawa - Poznań - Katowice</p>
-				<p>Wolnych miejsc: 1</p>
-			</div>
-			<div class="right-col d-flex flex-column justify-content-around align-items-end">
-				<h4>23zł</h4>
-				<div class="ride-reservation btn btn-dark" data-rideid="12">Rezerwuj</div>
+				<h4 th:text="${price}"></h4>
+				<button class="d-block mx-auto btn btn-dark mt-3" onclick="">Rezerwuj</button>
 			</div>
 		</div>
 	</div>
