@@ -29,6 +29,14 @@ CREATE TABLE IF NOT EXISTS cities(
     city_name VARCHAR(100) NOT NULL 
 );
 
+CREATE TABLE IF NOT EXISTS rides(
+	ride_id int auto_increment not null primary key,
+    driver int,
+    seats int,
+    ride_date datetime,
+    FOREIGN KEY (driver) REFERENCES users(id)
+);
+   
 CREATE TABLE IF NOT EXISTS rides_cities(
 	id int auto_increment not null primary key,
     ride_id int,
@@ -39,13 +47,6 @@ CREATE TABLE IF NOT EXISTS rides_cities(
     FOREIGN KEY (city_id) REFERENCES cities(id)
 );
 
-CREATE TABLE IF NOT EXISTS rides(
-	ride_id int auto_increment not null primary key,
-    driver int,
-    seats int,
-    ride_date datetime,
-    FOREIGN KEY (driver) REFERENCES users(id)
-);
 
 CREATE TABLE IF NOT EXISTS rides_users(
 	id int auto_increment not null primary key,
