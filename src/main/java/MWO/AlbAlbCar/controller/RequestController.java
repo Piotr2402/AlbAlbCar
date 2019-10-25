@@ -48,7 +48,7 @@ public class RequestController {
 		return cities;
 	}
 	
-	@GetMapping(value = "/search-trip")
+	@PostMapping(value = "/search-trip")
 	public List<Map<String, Object>> searchTrip(@RequestBody ObjectNode tripData) {
 		
 		int assembly_place = tripData.findValue("assembly_place").asInt();
@@ -72,7 +72,7 @@ public class RequestController {
 	@PostMapping(value = "/created-trips")
 	public List<Map<String, Object>> getCreatedTripsByMe(@RequestBody ObjectNode loginData) {
 		
-		String login = loginData.textValue();
+		String login = loginData.get("login").asText();
 		
 		List<Ride> rides = rideRepository.getByDriver(userRepository.getUserByLogin(login));
 		System.out.println(rides.size());
