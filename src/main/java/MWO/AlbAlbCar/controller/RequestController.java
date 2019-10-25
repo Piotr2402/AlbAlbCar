@@ -28,9 +28,13 @@ import MWO.AlbAlbCar.model.User;
 import MWO.AlbAlbCar.repository.CityRepository;
 import MWO.AlbAlbCar.repository.RideRepository;
 import MWO.AlbAlbCar.repository.UserRepository;
+import MWO.AlbAlbCar.service.UserService;
 
 @RestController
 public class RequestController {
+	
+	@Autowired
+	UserService userService;
 	
 	@Autowired
 	CityRepository cityRepository;
@@ -102,35 +106,22 @@ public class RequestController {
 		return json_rides;
 	}
 	
-	@PostMapping(value = "/signup")
-	public Map<String, String> signup(@RequestBody ObjectNode userData) {
-		
+	@PostMapping(value = "/sign-up")
+	public Map<String, String> signUp(@RequestBody ObjectNode userData) {
 		String login = userData.findValue("login").asText();
 		String phoneNumber = userData.findValue("phoneNumber").asText();
 		String password = userData.findValue("password").asText();
 		String password2 = userData.findValue("password2").asText();
-		Map<String, String> json = new HashMap<String, String>();
 		
-		if(!password.equals(password2)) {
-			json.put("result", "fail");
-			json.put("reason", "Passwords should be same");
-			return json;
-		}
-		
-		User user = new User(login,password, phoneNumber);
-		Set<Role> set = new HashSet<Role>();
-		set.add(new Role(2,"user"));
-		user.setRoles(set);
-		try {
-			userRepository.save(user);
-		} catch (DataIntegrityViolationException ex) {
-			json.put("result", "fail");
-			json.put("reason", "login is already in use");
-			return json;
-		}
-
-		json.put("result", "success");
-		return json;
-		
+		return userService.signUp(login, password, password2, phoneNumber);
 	}
+	
+	@PostMapping(value = "/sign-in")
+	public ArrayList <String> signIn(@RequestBody ObjectNode userData) {
+		String login = userData.findValue("login").asText();
+		String password = userData.findValue("password").asText();
+		
+		return userService.signIn(login,password);
+	}
+	
 }
