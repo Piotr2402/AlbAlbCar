@@ -1,33 +1,22 @@
 package MWO.AlbAlbCar.controller;
 
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.mysql.cj.jdbc.exceptions.SQLError;
 
 import MWO.AlbAlbCar.model.City;
-import MWO.AlbAlbCar.model.Ride;
-import MWO.AlbAlbCar.model.RidesUsers;
-import MWO.AlbAlbCar.model.Role;
-import MWO.AlbAlbCar.model.User;
 import MWO.AlbAlbCar.repository.CityRepository;
-import MWO.AlbAlbCar.repository.RideRepository;
 import MWO.AlbAlbCar.repository.UserRepository;
+import MWO.AlbAlbCar.service.RideService;
+import MWO.AlbAlbCar.service.RideUsersService;
 import MWO.AlbAlbCar.service.UserService;
 
 @RestController
@@ -37,10 +26,13 @@ public class RequestController {
 	UserService userService;
 	
 	@Autowired
-	CityRepository cityRepository;
+	RideUsersService rideUsersService;
 	
 	@Autowired
-	RideRepository rideRepository;
+	RideService rideService;
+	
+	@Autowired
+	CityRepository cityRepository;
 	
 	@Autowired
 	UserRepository userRepository;
@@ -59,50 +51,16 @@ public class RequestController {
 		int destination_place = tripData.findValue("destination_place").asInt();
 		String departure_datetime = tripData.findValue("departure_datetime").asText();
 		
-		List<Ride> rides = rideRepository.getRidesFromAToB(assembly_place, destination_place, departure_datetime);
-		List<Map<String, Object>> json_rides = new ArrayList<Map<String, Object>>();
-		for(int i = 0; i < rides.size(); i++) {
-			Map<String, Object> json = new HashMap<String, Object>();
-			json.put("date", rides.get(i).getRideDate());
-			json.put("driver", rides.get(i).getDriver().getLogin());
-			json.put("road", rides.get(i).getCitiesString());
-			json.put("seats", rides.get(i).getSeats());
-			json.put("price", rides.get(i).getCities().get(0).getPrice());
-			json_rides.add(json);
-		}
+		List<Map<String, Object>> json_rides = rideService.searchTrip(assembly_place, destination_place, departure_datetime);
+		
 		return json_rides;
 	}
 	
 	@PostMapping(value = "/created-trips")
 	public List<Map<String, Object>> getCreatedTripsByMe(@RequestBody ObjectNode loginData) {
-		
 		String login = loginData.get("login").asText();
-		
-		List<Ride> rides = rideRepository.getByDriver(userRepository.getUserByLogin(login));
-		List<Map<String, Object>> json_rides = new ArrayList<Map<String, Object>>();
-		for(int i = 0; i < rides.size(); i++) {
-			Map<String, Object> json = new HashMap<String, Object>();
-			json.put("id", rides.get(i).getRideId());
-			json.put("road", rides.get(i).getCitiesWithTimeString());
-			json.put("seats", rides.get(i).getSeats());
-			
-			List<RidesUsers> users = rides.get(i).getUsers();
-			List<Map<String, Object>> json_users = new ArrayList<Map<String, Object>>();
-			for(int j = 0; j < users.size(); j++) {
-				Map<String, Object> json_user = new HashMap<String, Object>();
-				json_user.put("login",users.get(j).getUser().getLogin());
-				json_user.put("from",users.get(j).getFromCity().getCityName());
-				json_user.put("to",users.get(j).getToCity().getCityName());
-				json_user.put("phone",users.get(j).getUser().getPhoneNumber());
-				json_user.put("price",20);
-				json_users.add(json_user);
-			}
-			json.put("clients", json_users);
-			json_rides.add(json);
-		}
-		
-		
-		return json_rides;
+		List<Map<String, Object>> rides = rideService.getCreatedTripsByUser(userRepository.getUserByLogin(login));
+		return rides;
 	}
 	
 	@PostMapping(value = "/sign-up")
@@ -121,6 +79,14 @@ public class RequestController {
 		String password = userData.findValue("password").asText();
 		
 		return userService.signIn(login,password);
+	}
+	
+	@PostMapping(value = "/participated-trips")
+	public List<Map<String, Object>> participatedTrips(@RequestBody ObjectNode userData) {
+		String login = userData.findValue("login").asText();
+		List<Map<String, Object>> json = rideUsersService.getUserRide(userRepository.getUserByLogin(login));
+		
+		return json;
 	}
 	
 }

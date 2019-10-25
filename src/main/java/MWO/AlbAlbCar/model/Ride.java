@@ -13,8 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "rides")
 public class Ride {
@@ -94,9 +92,9 @@ public class Ride {
 	public String getCitiesString() {
 		String road = "";
 		for (RideCity c : cities) {
-            road += c.getCity().getCityName()+"-";
+            road += c.getCity().getCityName()+" - ";
         }
-		road = road.substring(0, road.length()-2);
+		road = road.substring(0, road.length()-3);
 		return road;
 	}
 	
@@ -105,7 +103,7 @@ public class Ride {
 		for (RideCity c : cities) {
             road += c.getCity().getCityName()+"("+c.getDelay()+")" + " - ";
         }
-		road = road.substring(0, road.length()-2);
+		road = road.substring(0, road.length()-3);
 		return road;
 	}
 	

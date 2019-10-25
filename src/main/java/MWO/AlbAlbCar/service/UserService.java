@@ -13,7 +13,7 @@ import MWO.AlbAlbCar.model.Role;
 import MWO.AlbAlbCar.model.User;
 import MWO.AlbAlbCar.repository.UserRepository;
 
-@Service()
+@Service
 public class UserService {
 
 	@Autowired
