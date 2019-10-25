@@ -79,7 +79,6 @@ public class RequestController {
 		String login = loginData.get("login").asText();
 		
 		List<Ride> rides = rideRepository.getByDriver(userRepository.getUserByLogin(login));
-		System.out.println(rides.size());
 		List<Map<String, Object>> json_rides = new ArrayList<Map<String, Object>>();
 		for(int i = 0; i < rides.size(); i++) {
 			Map<String, Object> json = new HashMap<String, Object>();
@@ -117,7 +116,7 @@ public class RequestController {
 	}
 	
 	@PostMapping(value = "/sign-in")
-	public ArrayList <String> signIn(@RequestBody ObjectNode userData) {
+	public Map<String, String> signIn(@RequestBody ObjectNode userData) {
 		String login = userData.findValue("login").asText();
 		String password = userData.findValue("password").asText();
 		

@@ -1,6 +1,5 @@
 package MWO.AlbAlbCar.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -20,23 +19,23 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 
-	public ArrayList<String> signIn(String login, String password) {
-		ArrayList<String> result = new ArrayList<String>();
+	public Map<String, String> signIn(String login, String password) {
+		Map<String, String> result = new HashMap<String, String>();
 		User user = userRepository.getUserByLogin(login);
 
 		if (user == null) {
-			result.add("no such a user");
+			result.put("result","no such a user");
 			return result;
 		}
 
 		if (!login.equals(userRepository.checkPassword(login, password))) {
-			result.add("wrong password");
+			result.put("result","wrong password");
 			return result;
 		}
 
 		Set<Role> roles = user.getRoles();
 		for (Role role : roles)
-			result.add(role.getUserRole());
+			result.put("result",role.getUserRole());
 		return result;
 	}
 
