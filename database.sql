@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS rides(
     driver int,
     seats int,
     ride_date datetime,
+    price int,
     FOREIGN KEY (driver) REFERENCES users(id)
 );
    
@@ -66,11 +67,7 @@ INSERT INTO users VALUES (1,'jop','$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGF
 INSERT INTO users VALUES (2,'user1','$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu','231213123',1);
 INSERT INTO users_roles VALUES (1,'1');
 INSERT INTO users_roles VALUES (2,'2');
-insert into rides values (1,2,4,"2019-11-01 10:00:00");
-insert into rides_cities values (1,1,1,20,0);
-insert into rides_cities values (2,1,3,10,60);
-insert into rides_cities values (3,1,4,0,120);
-insert into rides_users values (1,1,1,1,4);
+
 
 
 INSERT INTO cities (city_name) VALUES ('Warszawa');
@@ -997,3 +994,8 @@ INSERT INTO cities (city_name) VALUES ('Żychlin');
 INSERT INTO cities (city_name) VALUES ('Żyrardów');
 INSERT INTO cities (city_name) VALUES ('Żywiec');
 
+insert into rides values (1,2,4,"2019-11-01 10:00:00",120);
+insert into rides_cities values (1,1,1,20,0);
+insert into rides_cities values (2,1,3,10,60);
+insert into rides_cities values (3,1,4,0,120);
+insert into rides_users values (1,1,1,1,4);

@@ -65,4 +65,7 @@ public class UserService {
 		return json;
 	}
 
+	public User getUserByLogin(String login) {
+		return userRepository.getUserByLogin(login);
+	}
 }

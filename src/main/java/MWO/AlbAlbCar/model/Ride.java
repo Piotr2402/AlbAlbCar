@@ -29,6 +29,9 @@ public class Ride {
 	@Column(name = "seats")
 	private int seats;
 	
+	@Column(name = "price")
+	private int price;
+	
 	@Column(name = "ride_date")
 	private String rideDate;
 	
@@ -63,6 +66,14 @@ public class Ride {
 
 	public void setSeats(int seats) {
 		this.seats = seats;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 	public String getRideDate() {

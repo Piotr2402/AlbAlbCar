@@ -1,5 +1,7 @@
 package MWO.AlbAlbCar.controller;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -10,11 +12,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import MWO.AlbAlbCar.model.City;
+import MWO.AlbAlbCar.model.Ride;
+import MWO.AlbAlbCar.model.User;
 import MWO.AlbAlbCar.repository.CityRepository;
 import MWO.AlbAlbCar.repository.UserRepository;
+import MWO.AlbAlbCar.service.RideCityService;
 import MWO.AlbAlbCar.service.RideService;
 import MWO.AlbAlbCar.service.RideUsersService;
 import MWO.AlbAlbCar.service.UserService;
@@ -30,6 +36,9 @@ public class RequestController {
 	
 	@Autowired
 	RideService rideService;
+	
+	@Autowired
+	RideCityService rideCityService;
 	
 	@Autowired
 	CityRepository cityRepository;
@@ -89,4 +98,22 @@ public class RequestController {
 		return json;
 	}
 	
+	@PostMapping(value = "/add-new-ride")
+	public Map<String, String> addRide(@RequestBody ObjectNode rideData) {
+		
+		String login = rideData.findValue("login").asText();
+		int assembly_place = rideData.findValue("assembly_place").asInt();
+		int destination_place = rideData.findValue("destination_place").asInt();
+		String departure_datetime = rideData.findValue("departure_datetime").asText();
+		int price = rideData.findValue("price").asInt();
+		int seats = rideData.findValue("seats").asInt();
+		Iterator<JsonNode> stops = rideData.get("stops").elements();
+		
+		User driver = userService.getUserByLogin(login);
+		Ride ride = rideService.addRide(driver,seats,price,departure_datetime);
+		
+		return rideCityService.addStops(ride,stops,price);
+
+		
+	}	
 }

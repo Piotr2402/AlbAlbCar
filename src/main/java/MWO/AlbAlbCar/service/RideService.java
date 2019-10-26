@@ -65,5 +65,13 @@ public class RideService {
 		}
 		return json_rides;
 	}
-	
+
+	public Ride addRide(User driver, int seats, int price, String departure_datetime) {
+		Ride ride = new Ride();
+		ride.setDriver(driver);
+		ride.setRideDate(departure_datetime);
+		ride.setSeats(seats);
+		ride.setPrice(price);
+		return rideRepository.save(ride);
+	}
 }
