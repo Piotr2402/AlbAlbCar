@@ -1,4 +1,12 @@
 <?php require_once('modules/admin-header.php'); ?>
+
+<?php
+if(!isset($_SESSION['admin']) || empty($_SESSION['admin'])) {
+    header("Location: ./");
+}
+?>
+<h3 class="text-center text-uppercase mb-4">Użytkownicy</h3>
+
 <form action="endpoints/user-search" class="mb-5">
     <p class="mt-2 mb-0 text-center">Szukaj po loginie</p>
     <input type="text" class="form-control" name="login" value="<?= isset($_GET['login']) ? $_GET['login'] : '' ?>" />

@@ -1,4 +1,11 @@
 <?php require_once('modules/admin-header.php'); ?>
+
+<?php
+if(!isset($_SESSION['admin']) || empty($_SESSION['admin'])) {
+    header("Location: ./");
+}
+?>
+<h3 class="text-center text-uppercase mb-4">Przejazdy</h3>
 <form action="#" class="mb-5">
     <p class="mt-2 mb-0 text-center">Szukaj po loginie kierowcy</p>
     <input type="text" id="admin-rides-input" class="form-control" name="login" value="<?= isset($_GET['login']) ? $_GET['login'] : '' ?>"/>
@@ -28,5 +35,17 @@
 <!--</table>-->
 
 <div id="admin-rides-search-result"></div>
+
+
+
+<?php
+$script = '
+        $("#admin-rides-search").on("click", function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            formSubmit($("#admin-rides-input").val(), "ride-search", $("#admin-rides-search-result"));
+        });
+    ';
+?>
 
 <?php require_once('modules/footer.php'); ?>

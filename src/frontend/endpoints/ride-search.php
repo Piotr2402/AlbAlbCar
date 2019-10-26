@@ -1,17 +1,10 @@
 <?php
 session_start();
-include("../modules/utilities.php");
 
-if(!isset($_POST['login'])) {
-    header("location: ../index.php");
+if(isset($_SESSION['login']) && !empty($_SESSION['login'])) {
+    header("Location: ../drive");
+    exit();
+} else if(!isset($_SESSION['admin']) || empty($_SESSION['admin'])) {
+    header("Location: ../");
     exit();
 }
-
-$url = 'http://localhost:8080/admin-users';
-$req = [
-    'login' => $_POST['login']
-];
-
-$result = utilities::post($url, $req);
-
-echo $result;

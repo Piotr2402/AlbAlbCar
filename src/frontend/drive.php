@@ -1,6 +1,13 @@
 <?php include_once('data/cities.php'); ?>
 
 <?php require_once('modules/header.php'); ?>
+
+<?php
+if(!isset($_SESSION['login']) || empty($_SESSION['login'])) {
+    header("Location: ./");
+}
+?>
+
 <h2 class="text-center">🚗 AlbAlbCar</h2>
 <p class="text-center">I podróż staje się lepsza..</p>
 

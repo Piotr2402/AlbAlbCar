@@ -54,10 +54,3 @@ function formSubmit(data, endpoint, destination) {
         $(destination).text(text);
     });
 }
-
-$("#admin-rides-search").on('click', function(e) {
-    console.log($("#admin-rides-input").val());
-    e.stopPropagation();
-    e.preventDefault();
-    formSubmit($("#admin-rides-input").val(), 'ride-search', $("#admin-rides-search-result"));
-});

@@ -1,4 +1,11 @@
 <?php require_once('modules/header.php'); ?>
+
+<?php
+if(!isset($_SESSION['login']) || empty($_SESSION['login'])) {
+    header("Location: ./");
+}
+?>
+
 <div class="row">
     <div class="col-md-6">
         <h3 class="main-header">Stworzone przejazdy</h3>

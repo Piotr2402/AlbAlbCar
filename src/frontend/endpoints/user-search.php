@@ -1,7 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: kubag_000
- * Date: 22.10.2019
- * Time: 11:58
- */
+session_start();
+
+if(isset($_SESSION['login']) && !empty($_SESSION['login'])) {
+    header("Location: ../drive");
+    exit();
+} else if(!isset($_SESSION['admin']) || empty($_SESSION['admin'])) {
+    header("Location: ../");
+    exit();
+}

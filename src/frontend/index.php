@@ -1,6 +1,13 @@
-<?php include_once('data/cities.php'); ?>
-
 <?php require_once('modules/header.php'); ?>
+
+<?php
+    if(isset($_SESSION['admin']) && !empty($_SESSION['admin'])) {
+        header("Location: admin-rides");
+    } else if(isset($_SESSION['login']) && !empty($_SESSION['login'])) {
+        header("Location: drive");
+    }
+?>
+
 <h2 class="text-center">🚗 AlbAlbCar</h2>
 <p class="text-center">I podróż staje się lepsza..</p>
 
@@ -16,7 +23,8 @@
                 <label for="password">Hasło</label>
                 <input type="password" class="form-control" name="password" placeholder="Hasło">
             </div>
-            <div id="login-info" class="form-text text-danger"></div>
+            <div class="form-text text-info font-weight-bold"><?= isset($_SESSION['login-info']) ? $_SESSION['login-info'] : '' ?></div>
+            <?php unset($_SESSION['login-info']); ?>
             <input type="submit" class="btn btn-dark mx-auto mt-2 px-4" value="Logowanie" />
         </form>
     </div>
@@ -33,13 +41,14 @@
             </div>
             <div class="form-group">
                 <label for="password">Hasło</label>
-                <input type="password" class="form-control" name="password" placeholder="Hasło">
+                <input type="password" class="form-control" name="password1" placeholder="Hasło">
             </div>
             <div class="form-group">
                 <label for="password">Powtórz hasło</label>
-                <input type="password" class="form-control" id="password" placeholder="Powtórz hasło">
+                <input type="password" class="form-control" name="password2" placeholder="Powtórz hasło">
             </div>
-            <div id="login-info" class="form-text text-danger">We'll never share your email with anyone else.</div>
+            <div class="form-text text-info font-weight-bold"><?= isset($_SESSION['register-info']) ? $_SESSION['register-info'] : '' ?></div>
+            <?php unset($_SESSION['register-info']); ?>
             <input type="submit" class="btn btn-dark mx-auto mt-2 px-4" value="Rejestracja" />
         </form>
     </div>

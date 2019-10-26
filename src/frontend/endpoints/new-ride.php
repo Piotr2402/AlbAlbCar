@@ -1,7 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: kubag_000
- * Date: 17.10.2019
- * Time: 19:20
- */
+session_start();
+
+if(isset($_SESSION['admin']) && !empty($_SESSION['admin'])) {
+    header("Location: ../admin-rides");
+    exit();
+} else if(!isset($_SESSION['login']) || empty($_SESSION['login'])) {
+    header("Location: ../");
+    exit();
+}

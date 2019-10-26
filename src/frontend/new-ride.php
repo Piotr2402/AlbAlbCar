@@ -1,6 +1,13 @@
 <?php include_once('data/cities.php'); ?>
 
 <?php require_once('modules/header.php'); ?>
+
+<?php
+if(!isset($_SESSION['login']) || empty($_SESSION['login'])) {
+    header("Location: ./");
+}
+?>
+
 <form method="post" action="endpoints/new-ride.php" id="new-ride" class="text-center">
     <h4 class="mb-4">Dodaj nowy przejazd</h4>
     <p class="mb-0">Skąd ruszasz?</p>
