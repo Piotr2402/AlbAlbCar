@@ -112,8 +112,6 @@ public class RequestController {
 		User driver = userService.getUserByLogin(login);
 		Ride ride = rideService.addRide(driver,seats,price,departure_datetime);
 		
-		return rideCityService.addStops(ride,stops,price);
-
-		
+		return rideCityService.addStops(ride,stops,price,assembly_place,destination_place);	
 	}	
 }

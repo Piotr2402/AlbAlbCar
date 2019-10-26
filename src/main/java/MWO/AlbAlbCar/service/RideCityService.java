@@ -25,7 +25,7 @@ public class RideCityService {
 	@Autowired
 	RideCityRepository rideCityRepository;
 
-	public Map<String, String> addStops(Ride ride, Iterator<JsonNode> stops, int priceAll) {
+	public Map<String, String> addStops(Ride ride, Iterator<JsonNode> stops, int priceAll, int assembly_place, int destination_place) {
 		
 		HashMap<String, String> result = new HashMap<String, String>();
 		ArrayList<RideCity> stopsList= new ArrayList<RideCity>();
@@ -34,6 +34,16 @@ public class RideCityService {
 		int previousDelay = 0; 
 		int previousPrice = 0;
 		String reason = "";
+		cities.add(assembly_place);
+		cities.add(destination_place);
+		
+		RideCity rideCityStart = new RideCity();
+		City cityStart = cityService.getCityById(assembly_place); 
+		rideCityStart.setRide(ride);
+		rideCityStart.setDelay(0);
+		rideCityStart.setPrice(0);
+		rideCityStart.setCity(cityStart);
+		stopsList.add(rideCityStart);
 		
 		while(stops.hasNext()) {		
 			JsonNode stop = stops.next();
@@ -76,8 +86,18 @@ public class RideCityService {
 			previousPrice = price;
 		}
 		
+		RideCity rideCityStop = new RideCity();
+		City cityStop = cityService.getCityById(destination_place); 
+		rideCityStop.setRide(ride);
+		rideCityStop.setDelay(0);
+		rideCityStop.setPrice(priceAll);
+		rideCityStop.setCity(cityStop);
+		stopsList.add(rideCityStop);
+		
 		for(RideCity stop : stopsList)
 			rideCityRepository.save(stop);
+		
+
 		
 		result.put("result","success");
 		
