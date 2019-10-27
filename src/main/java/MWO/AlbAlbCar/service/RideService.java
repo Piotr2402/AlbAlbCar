@@ -53,6 +53,7 @@ public class RideService {
 		List<Map<String, Object>> json_rides = new ArrayList<Map<String, Object>>();
 		for(int i = 0; i < rides.size(); i++) {
 			Map<String, Object> json = new HashMap<String, Object>();
+			json.put("id", rides.get(i).getRideId());
 			//To-Do Obliczać prawidłowo.
 			json.put("date", rides.get(i).getRideDate());
 			json.put("driver", rides.get(i).getDriver().getLogin());

@@ -46,8 +46,7 @@ public class RequestController {
 	@Autowired
 	UserRepository userRepository;
 	
-	@GetMapping(value = "/cities")
-	@ResponseBody
+	@PostMapping(value = "/cities")
 	public List<City> getAllCities() {
 		List<City> cities = cityRepository.findAll();
 		return cities;
