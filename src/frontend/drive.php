@@ -24,31 +24,7 @@ if(!isset($_SESSION['login']) || empty($_SESSION['login'])) {
     <input type="submit" class="d-block mx-auto btn btn-dark mt-3" value="Szukaj!">
 </form>
 
-<div id="rides" class="mt-5">
-    <div class="ride d-flex flex-column flex-md-row">
-        <div class="left-col d-flex flex-column">
-            <h3>2019-10-17 21:00</h3>
-            <p>login123</p>
-            <p class="font-weight-bold">Warszawa - Poznań - Katowice</p>
-            <p>Wolnych miejsc: 4</p>
-        </div>
-        <div class="right-col d-flex flex-column justify-content-around align-items-end">
-            <h4>23zł</h4>
-            <div class="ride-reservation btn btn-dark" data-rideid="11">Rezerwuj</div>
-        </div>
-    </div>
-    <div class="ride d-flex flex-column flex-md-row">
-        <div class="left-col d-flex flex-column">
-            <h3>2019-10-17 22:00</h3>
-            <p>login123</p>
-            <p class="font-weight-bold">Warszawa - Poznań - Katowice</p>
-            <p>Wolnych miejsc: 1</p>
-        </div>
-        <div class="right-col d-flex flex-column justify-content-around align-items-end">
-            <h4>23zł</h4>
-            <div class="ride-reservation btn btn-dark" data-rideid="12">Rezerwuj</div>
-        </div>
-    </div>
+<div id="rides" class="mt-5" style="display: none;">
 </div>
 
 <?php
@@ -68,6 +44,7 @@ $script = '
                     departure_datetime: $("#start-time").val()
                 };
                 formSubmit(data, "search-trip", "#rides", () => {});
+                $("#rides").slideDown();
             });
         });
         

@@ -20,4 +20,22 @@ $req = [
 $result = utilities::post($url, $req);
 $result = json_decode($result, true);
 
-echo print_r($result);
+$html = '';
+foreach($result as $ride) {
+    $html .= '<div class="ride d-flex flex-column flex-md-row">
+        <div class="left-col d-flex flex-column">
+            <h3>'.$ride['date'].'</h3>
+            <p>'.$ride['driver'].'</p>
+            <p class="font-weight-bold">'.$ride['road'].'</p>
+            <p>Wolnych miejsc: '.$ride['seats'].'</p>
+        </div>
+        <div class="right-col d-flex flex-column justify-content-around align-items-end">
+            <h4>'.$ride['price'].'zł</h4>
+            <div class="ride-reservation btn btn-dark" data-rideid="12">Rezerwuj</div>
+        </div>
+    </div>';
+}
+
+if(empty($html)) $html = '<p>Brak dostępnych przejazdów między tymi miastami w dany dzień!</p>';
+
+echo $html;
