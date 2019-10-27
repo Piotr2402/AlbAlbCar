@@ -43,14 +43,13 @@ $(".add-via-place").on('click', function() {
     $('.via-places').append($('<div>').addClass("via-place").append($(".via-place-pattern").html()));
 });
 
-function formSubmit(data, endpoint, destination) {
+function formSubmit(data, endpoint, destination, functionAfter) {
     $.post({
         type: "POST",
         url: "endpoints/" + endpoint + ".php",
-        data: {
-            login: data
-        },
+        data: data,
     }).always(function(text) {
-        $(destination).text(text);
+        $(destination).html(text);
+        functionAfter();
     });
 }

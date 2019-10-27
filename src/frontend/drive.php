@@ -1,5 +1,3 @@
-<?php include_once('data/cities.php'); ?>
-
 <?php require_once('modules/header.php'); ?>
 
 <?php
@@ -15,17 +13,11 @@ if(!isset($_SESSION['login']) || empty($_SESSION['login'])) {
 
     <h4 class="mb-4">Znajdź swój przejazd!</h4>
     <p class="mb-0">Skąd ruszasz?</p>
-    <select class="custom-select" name="assembly-place">
-        <?php foreach($cities as $id => $city) { ?>
-            <option value="<?=$id?>"><?=$city?></option>
-        <?php } ?>
-    </select>
+    <select class="custom-select" name="assembly-place" id="assembly-place"></select>
+
     <p class="mt-3 mb-0">Dokąd jedziesz?</p>
-    <select class="custom-select" name="destination-place">
-        <?php foreach($cities as $id => $city) { ?>
-            <option value="<?=$id?>"><?=$city?></option>
-        <?php } ?>
-    </select>
+    <select class="custom-select" name="destination-place" id="destination-place"></select>
+
     <p class="mt-3 mb-0">Od której szukasz przejazdu?</p>
     <input id="start-time" type="text" name="departure-datetime" class="text-center" readonly value="<?= date("Y-m-d H:i") ?>" />
     <div id="start-time-calendar" data-timepicker="true" data-language='en'></div>
@@ -58,4 +50,28 @@ if(!isset($_SESSION['login']) || empty($_SESSION['login'])) {
         </div>
     </div>
 </div>
+
+<?php
+$script = '
+        $(() => {
+            formSubmit("{}", "cities", "#destination-place, #assembly-place", () => {
+                $("#destination-place option[value=2]").prop("selected", "selected");
+            });
+            
+            
+            $("#albalbcar-form").on("submit", function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                let data = {
+                    assembly_place: $("#assembly-place").val(),
+                    destination_place: $("#destination-place").val(),
+                    departure_datetime: $("#start-time").val()
+                };
+                formSubmit(data, "search-trip", "#rides", () => {});
+            });
+        });
+        
+    ';
+?>
+
 <?php require_once('modules/footer.php'); ?>

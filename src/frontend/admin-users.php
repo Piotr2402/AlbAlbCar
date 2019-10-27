@@ -27,7 +27,7 @@ if(!isset($_SESSION['admin']) || empty($_SESSION['admin'])) {
         <td>1</td>
         <td>login123</td>
         <td>234 234 234</td>
-        <td><a href="">Usuń</a></td>
+        <td><a href="endpoints/remove-user?login=login123">Usuń</a></td>
     </tr>
     </tbody>
 </table>
