@@ -112,5 +112,13 @@ public class RequestController {
 		Ride ride = rideService.addRide(driver,seats,price,departure_datetime);
 		
 		return rideCityService.addStops(ride,stops,price,assembly_place,destination_place);	
-	}	
+	}
+
+	@PostMapping(value = "/remove-ride")
+	public Map<String, Object> removeRide(@RequestBody ObjectNode rideData) {
+		int rideId = rideData.findValue("rideId").asInt();
+		String login = rideData.findValue("login").asText();
+
+		return rideService.removeRide(rideId, login);
+	}
 }

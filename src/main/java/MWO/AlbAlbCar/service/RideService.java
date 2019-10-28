@@ -1,10 +1,11 @@
 package MWO.AlbAlbCar.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
+import MWO.AlbAlbCar.repository.RideCityRepository;
+import MWO.AlbAlbCar.repository.RidesUsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +13,19 @@ import MWO.AlbAlbCar.model.Ride;
 import MWO.AlbAlbCar.model.RidesUsers;
 import MWO.AlbAlbCar.model.User;
 import MWO.AlbAlbCar.repository.RideRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RideService {
 	
 	@Autowired
 	RideRepository rideRepository;
+
+	@Autowired
+	RideCityRepository rideCityRepository;
+
+	@Autowired
+	RidesUsersRepository ridesUsersRepository;
 	
 	public List<Map<String, Object>> getCreatedTripsByUser(User user) {
 		List<Ride> rides = rideRepository.getByDriver(user);
@@ -74,5 +82,39 @@ public class RideService {
 		ride.setSeats(seats);
 		ride.setPrice(price);
 		return rideRepository.save(ride);
+	}
+
+	@Transactional
+	public Map<String, Object> removeRide(int rideID, String login) {
+		Map<String, Object> response = new HashMap<String, Object>();
+
+		Optional<Ride> oRide = rideRepository.findById(rideID);
+
+		if (oRide.isPresent()) {
+			Ride ride = oRide.get();
+
+			if (ride.getDriver().getLogin().equals(login)) {
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				LocalDateTime rideDateTime = LocalDateTime.parse(ride.getRideDate(), formatter);
+				rideDateTime = rideDateTime.minusHours(2);
+				if(LocalDateTime.now().isBefore(rideDateTime)) {
+					ridesUsersRepository.deleteByRide(ride);
+					rideCityRepository.deleteByRide(ride);
+					rideRepository.deleteById(rideID);
+					response.put("result", "success");
+				} else {
+					response.put("result", "fail");
+					response.put("message", "Too late to delete the ride");
+				}
+			} else {
+				response.put("result", "fail");
+				response.put("message", "Not a driver of the ride");
+			}
+		} else {
+			response.put("result", "fail");
+			response.put("message", "Ride not found");
+		}
+
+		return response;
 	}
 }
