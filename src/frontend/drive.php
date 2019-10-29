@@ -24,8 +24,7 @@ if(!isset($_SESSION['login']) || empty($_SESSION['login'])) {
     <input type="submit" class="d-block mx-auto btn btn-dark mt-3" value="Szukaj!">
 </form>
 
-<div id="rides" class="mt-5" style="display: none;">
-</div>
+<div id="rides" class="mt-5" style="display: none;"></div>
 
 <?php
 $script = '
