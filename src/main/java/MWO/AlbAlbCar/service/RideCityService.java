@@ -89,7 +89,7 @@ public class RideCityService {
 		RideCity rideCityStop = new RideCity();
 		City cityStop = cityService.getCityById(destination_place); 
 		rideCityStop.setRide(ride);
-		rideCityStop.setDelay(0);
+		rideCityStop.setDelay(stopsList.get(stopsList.size()-1).getDelay()+1);
 		rideCityStop.setPrice(priceAll);
 		rideCityStop.setCity(cityStop);
 		stopsList.add(rideCityStop);
