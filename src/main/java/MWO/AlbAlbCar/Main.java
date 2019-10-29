@@ -2,7 +2,9 @@ package MWO.AlbAlbCar;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+@EnableJpaRepositories(basePackages = "MWO.AlbAlbCar.repository")
 @SpringBootApplication
 public class Main  {
     public static void main( String[] args ) {
