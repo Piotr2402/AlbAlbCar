@@ -69,7 +69,7 @@ public class RideService {
 			//To-Do Obliczać prawidłowo.
 			json.put("seats", rides.get(i).getSeats());
 			//To-Do Obliczać prawidłowo.
-			json.put("price", rides.get(i).getCities().get(0).getPrice());
+			json.put("price", rides.get(i).getCities().get(1).getPrice());
 			json_rides.add(json);
 		}
 		return json_rides;
