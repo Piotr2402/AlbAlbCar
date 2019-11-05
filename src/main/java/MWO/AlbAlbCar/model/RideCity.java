@@ -31,6 +31,9 @@ public class RideCity {
     
 	@Column(name = "delay")
 	private int delay;
+	
+	@Column(name = "peopleInCar")
+	private int peopleInCar;
     
     public RideCity() {}
 
@@ -73,4 +76,13 @@ public class RideCity {
 	public void setDelay(int delay) {
 		this.delay = delay;
 	}
+
+	public int getPeopleInCar() {
+		return peopleInCar;
+	}
+
+	public void setPeopleInCar(int peopleInCar) {
+		this.peopleInCar = peopleInCar;
+	}
+	
 }

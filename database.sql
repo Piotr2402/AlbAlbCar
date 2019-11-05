@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS rides_cities(
     city_id int,
     price double,
     delay int,
+    peopleInCar int,
     FOREIGN KEY (ride_id) REFERENCES rides(ride_id),
     FOREIGN KEY (city_id) REFERENCES cities(id)
 );
@@ -995,7 +996,7 @@ INSERT INTO cities (city_name) VALUES ('Żyrardów');
 INSERT INTO cities (city_name) VALUES ('Żywiec');
 
 insert into rides values (1,2,4,"2019-11-01 10:00:00",120);
-insert into rides_cities values (1,1,1,20,0);
-insert into rides_cities values (2,1,3,10,60);
-insert into rides_cities values (3,1,4,0,120);
+insert into rides_cities values (1,1,1,20,0,0);
+insert into rides_cities values (2,1,3,10,60,0);
+insert into rides_cities values (3,1,4,0,120,0);
 insert into rides_users values (1,1,1,1,4);
