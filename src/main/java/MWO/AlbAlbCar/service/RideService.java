@@ -84,6 +84,7 @@ public class RideService {
 		return rideRepository.save(ride);
 	}
 
+
 	@Transactional
 	public Map<String, Object> removeRide(int rideID, String login) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -116,5 +117,10 @@ public class RideService {
 		}
 
 		return response;
+
+	
+	public Ride getRideById(int id) {
+		return rideRepository.findById(id).orElse(null);
+
 	}
 }

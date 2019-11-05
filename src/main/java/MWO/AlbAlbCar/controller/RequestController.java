@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -120,5 +122,21 @@ public class RequestController {
 		String login = rideData.findValue("login").asText();
 
 		return rideService.removeRide(rideId, login);
+	}	
+	
+	@PostMapping(value = "/book-a-ride")
+	public HashMap<String,String> bookRide(@RequestBody ObjectNode rideData) { 
+		String login = rideData.findValue("login").asText();
+		int assembly_place = rideData.findValue("assembly_place").asInt();
+		int destination_place = rideData.findValue("destination_place").asInt();
+		int rideId = rideData.findValue("rideId").asInt();
+		
+		HashMap<String,String> result = new HashMap<String, String>();
+		if(rideUsersService.addRideUser(login, rideId, assembly_place, destination_place)) 
+			result.put("result", "success");
+		else
+			result.put("result", "fail");
+		
+		return result;
 	}
 }

@@ -20,6 +20,16 @@ public class RideUsersService {
 	@Autowired
 	RidesUsersRepository ridesUsersRepository;
 	
+	@Autowired
+	CityService cityService;
+	
+	@Autowired
+	UserService userService;
+	
+	@Autowired
+	RideService rideService;
+	
+	
 	public List<Map<String, Object>> getUserRide(User user) {
 		List<RidesUsers> rides = ridesUsersRepository.getByUser(user);
 		List<Map<String, Object>> dataToSend = new ArrayList<Map<String, Object>>();
@@ -81,5 +91,26 @@ public class RideUsersService {
 		}
 		return false;
 	}
+
+
+	public boolean addRideUser(String login, int rideId, int assembly_place, int destination_place) {
+		
+		Ride ride = rideService.getRideById(rideId);
+		User user = userService.getUserByLogin(login);
+		
+		if(ride.getSeats() > ridesUsersRepository.numberOfUsersFromAToB(rideId, assembly_place, destination_place)) {
+			RidesUsers rideUser = new RidesUsers();
+			rideUser.setRide(ride);
+			rideUser.setUser(user);
+			rideUser.setFromCity(cityService.getCityById(assembly_place));
+			rideUser.setToCity(cityService.getCityById(destination_place));
+			ridesUsersRepository.save(rideUser);
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
 	
 }
