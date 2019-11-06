@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS rides_cities(
     city_id int,
     price double,
     delay int,
-    peopleInCar int,
+    people_in_car int,
     FOREIGN KEY (ride_id) REFERENCES rides(ride_id),
     FOREIGN KEY (city_id) REFERENCES cities(id)
 );

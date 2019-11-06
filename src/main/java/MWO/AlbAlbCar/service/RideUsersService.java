@@ -105,6 +105,10 @@ public class RideUsersService {
 			rideUser.setFromCity(cityService.getCityById(assembly_place));
 			rideUser.setToCity(cityService.getCityById(destination_place));
 			ridesUsersRepository.save(rideUser);
+			
+			//wez wszystkie city pomiedzy a i b
+			//List<City> rideService.stopsBetweenAAndB(rideId, assembly_place, destination_place);
+			
 			return true;
 		} else {
 			return false;

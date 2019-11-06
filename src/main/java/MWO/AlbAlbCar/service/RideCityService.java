@@ -43,6 +43,7 @@ public class RideCityService {
 		rideCityStart.setDelay(0);
 		rideCityStart.setPrice(0);
 		rideCityStart.setCity(cityStart);
+		rideCityStart.setPeopleInCar(0);
 		stopsList.add(rideCityStart);
 		
 		while(stops.hasNext()) {		
@@ -79,6 +80,7 @@ public class RideCityService {
 			rideCity.setDelay(delay);
 			rideCity.setPrice(price);
 			rideCity.setCity(city);
+			rideCity.setPeopleInCar(0);
 			stopsList.add(rideCity);
 			
 			cities.add(cityId);
@@ -89,18 +91,15 @@ public class RideCityService {
 		RideCity rideCityStop = new RideCity();
 		City cityStop = cityService.getCityById(destination_place); 
 		rideCityStop.setRide(ride);
-
 		rideCityStop.setDelay(stopsList.get(stopsList.size()-1).getDelay()+1);
-
 		rideCityStop.setPrice(priceAll);
 		rideCityStop.setCity(cityStop);
+		rideCityStop.setPeopleInCar(0);
 		stopsList.add(rideCityStop);
 		
 		for(RideCity stop : stopsList)
 			rideCityRepository.save(stop);
-		
 
-		
 		result.put("result","success");
 		
 		return result;

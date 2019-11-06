@@ -117,10 +117,12 @@ public class RideService {
 		}
 
 		return response;
-
+	}
 	
 	public Ride getRideById(int id) {
 		return rideRepository.findById(id).orElse(null);
 
 	}
+	
+	//public List<RideCity> 
 }

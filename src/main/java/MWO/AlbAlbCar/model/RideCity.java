@@ -32,7 +32,7 @@ public class RideCity {
 	@Column(name = "delay")
 	private int delay;
 	
-	@Column(name = "peopleInCar")
+	@Column(name = "people_in_car")
 	private int peopleInCar;
     
     public RideCity() {}
