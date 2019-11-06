@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import MWO.AlbAlbCar.model.Ride;
+import MWO.AlbAlbCar.model.RideCity;
 import MWO.AlbAlbCar.model.RidesUsers;
 import MWO.AlbAlbCar.model.User;
 import MWO.AlbAlbCar.repository.RideRepository;
@@ -121,8 +122,6 @@ public class RideService {
 	
 	public Ride getRideById(int id) {
 		return rideRepository.findById(id).orElse(null);
-
 	}
 	
-	//public List<RideCity> 
 }

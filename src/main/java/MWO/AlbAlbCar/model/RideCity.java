@@ -85,4 +85,12 @@ public class RideCity {
 		this.peopleInCar = peopleInCar;
 	}
 	
+	public void incrementPeopleInCar() {
+		peopleInCar++;
+	}
+	
+	public void decrementPeopleInCar() {
+		peopleInCar--;
+	}
+	
 }

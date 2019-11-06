@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,9 @@ public class RideCityService {
 
 	@Autowired 
 	CityService cityService;
+	
+	@Autowired 
+	RideService rideService;
 	
 	@Autowired
 	RideCityRepository rideCityRepository;
@@ -103,5 +108,36 @@ public class RideCityService {
 		result.put("result","success");
 		
 		return result;
+	}
+	
+	public List<RideCity> stopsBetweenAAndB(int rideId, int assembly_place, int destination_place) {
+		
+		RideCity assemblyCity = rideCityRepository.findyByRideIdAndCityId(rideId, assembly_place);
+		int assemblyDelay = 0;
+		assemblyDelay = assemblyCity.getDelay();
+			
+		RideCity destinationCity = rideCityRepository.findyByRideIdAndCityId(rideId, destination_place);;
+		int destinationDelay = 0;
+		destinationDelay = destinationCity.getDelay();
+		
+		return rideCityRepository.getStopsBetweenDelays(rideId,assemblyDelay,destinationDelay);
+	}
+	
+	public boolean isFreeSeatOnRideFromAToB(int rideId, int assembly_place, int destination_place) {
+	
+		int seatsInRide = rideService.getRideById(rideId).getSeats();
+		
+		List<RideCity> stopsList = stopsBetweenAAndB(rideId, assembly_place, destination_place);
+		for (RideCity stop : stopsList) {
+			if (stop.getPeopleInCar() < seatsInRide)
+				continue;
+			else
+				return false;
+		}
+		return true;
+	}
+	
+	public void save(RideCity rc) {
+		rideCityRepository.save(rc);
 	}
 }

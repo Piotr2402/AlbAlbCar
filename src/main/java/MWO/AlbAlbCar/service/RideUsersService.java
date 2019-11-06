@@ -29,6 +29,8 @@ public class RideUsersService {
 	@Autowired
 	RideService rideService;
 	
+	@Autowired
+	RideCityService rideCityService;
 	
 	public List<Map<String, Object>> getUserRide(User user) {
 		List<RidesUsers> rides = ridesUsersRepository.getByUser(user);
@@ -98,7 +100,7 @@ public class RideUsersService {
 		Ride ride = rideService.getRideById(rideId);
 		User user = userService.getUserByLogin(login);
 		
-		if(ride.getSeats() > ridesUsersRepository.numberOfUsersFromAToB(rideId, assembly_place, destination_place)) {
+		if(rideCityService.isFreeSeatOnRideFromAToB(rideId, assembly_place, destination_place)) {
 			RidesUsers rideUser = new RidesUsers();
 			rideUser.setRide(ride);
 			rideUser.setUser(user);
@@ -106,15 +108,15 @@ public class RideUsersService {
 			rideUser.setToCity(cityService.getCityById(destination_place));
 			ridesUsersRepository.save(rideUser);
 			
-			//wez wszystkie city pomiedzy a i b
-			//List<City> rideService.stopsBetweenAAndB(rideId, assembly_place, destination_place);
-			
+			List<RideCity> stopsList = rideCityService.stopsBetweenAAndB(rideId, assembly_place, destination_place);
+			stopsList.forEach(value -> {
+				value.incrementPeopleInCar();
+				rideCityService.save(value);
+			});	
 			return true;
 		} else {
 			return false;
 		}
-		
 	}
-	
 	
 }
