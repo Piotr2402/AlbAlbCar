@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RideService {
-	
+
 	@Autowired
 	RideRepository rideRepository;
 
@@ -27,28 +27,31 @@ public class RideService {
 
 	@Autowired
 	RidesUsersRepository ridesUsersRepository;
-	
+
+	@Autowired
+	RideCityService rideCityService;
+
 	public List<Map<String, Object>> getCreatedTripsByUser(User user) {
 		List<Ride> rides = rideRepository.getByDriver(user);
 		List<Map<String, Object>> json_rides = new ArrayList<Map<String, Object>>();
-		for(int i = 0; i < rides.size(); i++) {
+		for (int i = 0; i < rides.size(); i++) {
 			Map<String, Object> json = new HashMap<String, Object>();
 			json.put("id", rides.get(i).getRideId());
-			//To-Do Obliczać prawidłowo datę.
+			// To-Do Obliczać prawidłowo datę.
 			json.put("road", rides.get(i).getCitiesWithTimeString());
-			//To-Do Obliczać prawidłowo.
+			// To-Do Obliczać prawidłowo.
 			json.put("seats", rides.get(i).getSeats());
-			
+
 			List<RidesUsers> users = rides.get(i).getUsers();
 			List<Map<String, Object>> json_users = new ArrayList<Map<String, Object>>();
-			for(int j = 0; j < users.size(); j++) {
+			for (int j = 0; j < users.size(); j++) {
 				Map<String, Object> json_user = new HashMap<String, Object>();
-				json_user.put("login",users.get(j).getUser().getLogin());
-				json_user.put("from",users.get(j).getFromCity().getCityName());
-				json_user.put("to",users.get(j).getToCity().getCityName());
-				json_user.put("phone",users.get(j).getUser().getPhoneNumber());
-				//To-Do Obliczać prawidłowo.
-				json_user.put("price",20);
+				json_user.put("login", users.get(j).getUser().getLogin());
+				json_user.put("from", users.get(j).getFromCity().getCityName());
+				json_user.put("to", users.get(j).getToCity().getCityName());
+				json_user.put("phone", users.get(j).getUser().getPhoneNumber());
+				// To-Do Obliczać prawidłowo.
+				json_user.put("price", 20);
 				json_users.add(json_user);
 			}
 			json.put("clients", json_users);
@@ -56,23 +59,29 @@ public class RideService {
 		}
 		return json_rides;
 	}
-	
+
 	public List<Map<String, Object>> searchTrip(int assembly_place, int destination_place, String departure_datetime) {
 		List<Ride> rides = rideRepository.getRidesFromAToB(assembly_place, destination_place, departure_datetime);
 		List<Map<String, Object>> json_rides = new ArrayList<Map<String, Object>>();
-		for(int i = 0; i < rides.size(); i++) {
-			Map<String, Object> json = new HashMap<String, Object>();
-			json.put("id", rides.get(i).getRideId());
-			//To-Do Obliczać prawidłowo.
-			json.put("date", rides.get(i).getRideDate());
-			json.put("driver", rides.get(i).getDriver().getLogin());
-			json.put("road", rides.get(i).getCitiesString());
-			//To-Do Obliczać prawidłowo.
-			json.put("seats", rides.get(i).getSeats());
-			//To-Do Obliczać prawidłowo.
-			json.put("price", rides.get(i).getCities().get(1).getPrice());
-			json_rides.add(json);
+
+		for (int i = 0; i < rides.size(); i++) {
+			
+			int rideId = rides.get(i).getRideId();
+			if (rideCityService.isFreeSeatOnRideFromAToB(rideId, assembly_place, destination_place)) {
+				Map<String, Object> json = new HashMap<String, Object>();
+				json.put("id", rideId);
+				// To-Do Obliczać prawidłowo.
+				json.put("date", rides.get(i).getRideDate());
+				json.put("driver", rides.get(i).getDriver().getLogin());
+				json.put("road", rides.get(i).getCitiesString());
+				// To-Do Obliczać prawidłowo.
+				json.put("seats", rides.get(i).getSeats());
+				// To-Do Obliczać prawidłowo.
+				json.put("price", rides.get(i).getCities().get(1).getPrice());
+				json_rides.add(json);
+			}
 		}
+		
 		return json_rides;
 	}
 
@@ -84,7 +93,6 @@ public class RideService {
 		ride.setPrice(price);
 		return rideRepository.save(ride);
 	}
-
 
 	@Transactional
 	public Map<String, Object> removeRide(int rideID, String login) {
@@ -99,7 +107,7 @@ public class RideService {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				LocalDateTime rideDateTime = LocalDateTime.parse(ride.getRideDate(), formatter);
 				rideDateTime = rideDateTime.minusHours(2);
-				if(LocalDateTime.now().isBefore(rideDateTime)) {
+				if (LocalDateTime.now().isBefore(rideDateTime)) {
 					ridesUsersRepository.deleteByRide(ride);
 					rideCityRepository.deleteByRide(ride);
 					rideRepository.deleteById(rideID);
@@ -119,9 +127,9 @@ public class RideService {
 
 		return response;
 	}
-	
+
 	public Ride getRideById(int id) {
 		return rideRepository.findById(id).orElse(null);
 	}
-	
+
 }

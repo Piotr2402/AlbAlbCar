@@ -56,7 +56,6 @@ public class RequestController {
 	
 	@PostMapping(value = "/search-trip")
 	public List<Map<String, Object>> searchTrip(@RequestBody ObjectNode tripData) {
-		
 		int assembly_place = tripData.findValue("assembly_place").asInt();
 		int destination_place = tripData.findValue("destination_place").asInt();
 		String departure_datetime = tripData.findValue("departure_datetime").asText();
