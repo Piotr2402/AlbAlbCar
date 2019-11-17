@@ -131,11 +131,41 @@ public class RequestController {
 		int rideId = rideData.findValue("rideId").asInt();
 		
 		HashMap<String,String> result = new HashMap<String, String>();
-		if(rideUsersService.addRideUser(login, rideId, assembly_place, destination_place)) 
-			result.put("result", "success");
-		else
+		Ride ride = rideService.getRideById(rideId);
+		User user = userService.getUserByLogin(login);
+		if(rideUsersService.hasUserBookedYet(user, ride)) {
 			result.put("result", "fail");
+			result.put("reason", "Jesteś już zpaisany na ten przejazd");
+		} else {
+			if(rideUsersService.addRideUser(login, rideId, assembly_place, destination_place)) 
+				result.put("result", "success");
+			else {
+				result.put("result", "fail");
+				result.put("reason", "Brak miejsc na ten przejazd");
+			}
+		}
+		return result;
+	}
+	
+	@PostMapping(value = "/resign-from-trip")
+	public HashMap<String,String> resignFromTrip(@RequestBody ObjectNode rideData) {
+		HashMap<String,String> result = new HashMap<String, String>();
+		String login = rideData.findValue("login").asText();
+		int rideId = rideData.findValue("rideId").asInt();
 		
+		Ride ride = rideService.getRideById(rideId);
+		User user = userService.getUserByLogin(login);
+		if(rideUsersService.canDelete(ride.getRideDate())) {
+			if(rideUsersService.resignFromTrip(user, ride)) {
+				result.put("resigned", "success");
+			} else {
+				result.put("result", "fail");
+				result.put("reason", "Nie jesteś zapisany na ten przejazd");
+			}
+		} else {
+			result.put("result", "fail");
+			result.put("reason", "Za późno by zrezygnować z przejazdu");
+		}
 		return result;
 	}
 }

@@ -119,4 +119,30 @@ public class RideUsersService {
 		}
 	}
 	
+	public boolean resignFromTrip(User user, Ride ride) {
+		List<RidesUsers> ridesUser = ridesUsersRepository.getRideUser(user.getUserId(), ride.getRideId());
+		RidesUsers rideUser = null;
+		if(ridesUser.size() == 0) {
+			return false;
+		} else {
+			rideUser = ridesUser.get(0);
+		}
+		List<RideCity> stopsList = rideCityService.stopsBetweenAAndB(ride.getRideId(), rideUser.getFromCity().getId(), rideUser.getToCity().getId());
+		stopsList.forEach(value -> {
+			value.decrementPeopleInCar();
+			rideCityService.save(value);
+		});
+		ridesUsersRepository.delete(rideUser);
+		return true;
+	}
+	
+	public boolean hasUserBookedYet(User user, Ride ride) {
+		List<RidesUsers> ridesUser = ridesUsersRepository.getRideUser(user.getUserId(), ride.getRideId());
+		if(ridesUser.size() == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 }
