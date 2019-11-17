@@ -43,8 +43,7 @@ public class RideUsersService {
 			oneRide.put("driverLogin", r.getRide().getDriver().getLogin());
 			oneRide.put("driverPhone", r.getRide().getDriver().getPhoneNumber());
 			oneRide.put("canDelete",canDelete(r.getRide().getRideDate()));
-			//To-Do Zwrócić prawidłowe.
-			oneRide.put("price",20);
+			oneRide.put("price",rideCityService.computePrice(r.getRide(), r.getFromCity().getId(), r.getToCity().getId()));
 			dataToSend.add(oneRide);
 		}
 		return dataToSend;

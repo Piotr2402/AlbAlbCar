@@ -27,7 +27,7 @@ public class RideCity {
 	private City city;
 	
 	@Column(name = "price")
-	private int price;
+	private double price;
     
 	@Column(name = "delay")
 	private int delay;
@@ -61,11 +61,11 @@ public class RideCity {
 		this.city = city;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 

@@ -107,15 +107,5 @@ public class Ride {
         }
 		road = road.substring(0, road.length()-3);
 		return road;
-	}
-	
-	public String getCitiesWithTimeString() {
-		String road = "";
-		for (RideCity c : cities) {
-            road += c.getCity().getCityName()+"("+c.getDelay()+")" + " - ";
-        }
-		road = road.substring(0, road.length()-3);
-		return road;
-	}
-	
+	}	
 }
