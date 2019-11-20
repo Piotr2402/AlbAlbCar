@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import MWO.AlbAlbCar.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -151,7 +152,7 @@ public class RequestController {
 		
 		Ride ride = rideService.getRideById(rideId);
 		User user = userService.getUserByLogin(login);
-		if(rideUsersService.canDelete(ride.getRideDate())) {
+		if(DateUtil.canDelete(ride.getRideDate())) {
 			if(rideUsersService.resignFromTrip(user, ride)) {
 				result.put("resigned", "success");
 			} else {

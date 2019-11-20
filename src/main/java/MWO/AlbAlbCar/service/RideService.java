@@ -7,6 +7,9 @@ import java.util.*;
 import MWO.AlbAlbCar.repository.CityRepository;
 import MWO.AlbAlbCar.repository.RideCityRepository;
 import MWO.AlbAlbCar.repository.RidesUsersRepository;
+import MWO.AlbAlbCar.util.DateUtil;
+import MWO.AlbAlbCar.util.JSONUtil;
+import MWO.AlbAlbCar.util.RideUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,21 +46,9 @@ public class RideService {
 		for (int i = 0; i < rides.size(); i++) {
 			Map<String, Object> json = new HashMap<String, Object>();
 			json.put("id", rides.get(i).getRideId());
-			json.put("road", rideCityService.getCitiesWithTimeAndSeats(rides.get(i)));
+			json.put("road", JSONUtil.getCitiesWithTimeAndSeats(rides.get(i)));
 			json.put("seats", rides.get(i).getSeats());
-
-			List<RidesUsers> users = rides.get(i).getUsers();
-			List<Map<String, Object>> json_users = new ArrayList<Map<String, Object>>();
-			for (int j = 0; j < users.size(); j++) {
-				Map<String, Object> json_user = new HashMap<String, Object>();
-				json_user.put("login", users.get(j).getUser().getLogin());
-				json_user.put("from", users.get(j).getFromCity().getCityName());
-				json_user.put("to", users.get(j).getToCity().getCityName());
-				json_user.put("phone", users.get(j).getUser().getPhoneNumber());
-				json_user.put("price", rideCityService.computePrice(rides.get(i), users.get(j).getFromCity().getId(), users.get(j).getToCity().getId()));
-				json_users.add(json_user);
-			}
-			json.put("clients", json_users);
+			json.put("clients", JSONUtil.getRideUsers(rides.get(i)));
 			json_rides.add(json);
 		}
 		return json_rides;
@@ -73,11 +64,11 @@ public class RideService {
 			if (rideCityService.isFreeSeatOnRideFromAToB(rideId, assembly_place, destination_place)) {
 				Map<String, Object> json = new HashMap<String, Object>();
 				json.put("id", rideId);
-				json.put("date", rideUsersService.getProperDepartureDate(rides.get(i).getRideDate(), cityRepository.getOne(assembly_place), rides.get(i).getCities()));
+				json.put("date", DateUtil.getProperDepartureDate(rides.get(i).getRideDate(), cityRepository.getOne(assembly_place), rides.get(i).getCities()));
 				json.put("driver", rides.get(i).getDriver().getLogin());
 				json.put("road", rides.get(i).getCitiesString());
 				json.put("seats", rideCityService.computeFreeSeats(rides.get(i), assembly_place, destination_place));
-				json.put("price", rideCityService.computePrice(rides.get(i),assembly_place,destination_place));
+				json.put("price", RideUtil.computePrice(rides.get(i),assembly_place,destination_place));
 				json_rides.add(json);
 			}
 		}
@@ -130,6 +121,14 @@ public class RideService {
 
 	public Ride getRideById(int id) {
 		return rideRepository.findById(id).orElse(null);
+	}
+
+	public List<Ride> getAllRides() {
+		return rideRepository.findAll();
+	}
+
+	public List<Ride> getAllRidesByUser(User user) {
+		return rideRepository.getByDriver(user);
 	}
 
 }

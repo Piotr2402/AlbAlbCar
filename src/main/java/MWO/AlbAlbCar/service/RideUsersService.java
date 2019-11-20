@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import MWO.AlbAlbCar.util.DateUtil;
+import MWO.AlbAlbCar.util.JSONUtil;
+import MWO.AlbAlbCar.util.RideUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,61 +41,16 @@ public class RideUsersService {
 		for (RidesUsers r : rides) {
 			Map<String, Object> oneRide = new HashMap<String, Object>();
 			oneRide.put("id", r.getRide().getRideId());
-			oneRide.put("date", getProperDepartureDate(r.getRide().getRideDate(),r.getFromCity(),r.getRide().getCities()));
-			oneRide.put("road",getUserRoad(r.getRide(),r.getFromCity(),r.getToCity()));
+			oneRide.put("date", DateUtil.getProperDepartureDate(r.getRide().getRideDate(),r.getFromCity(),r.getRide().getCities()));
+			oneRide.put("road", JSONUtil.getUserRoad(r.getRide(),r.getFromCity(),r.getToCity()));
 			oneRide.put("driverLogin", r.getRide().getDriver().getLogin());
 			oneRide.put("driverPhone", r.getRide().getDriver().getPhoneNumber());
-			oneRide.put("canDelete",canDelete(r.getRide().getRideDate()));
-			oneRide.put("price",rideCityService.computePrice(r.getRide(), r.getFromCity().getId(), r.getToCity().getId()));
+			oneRide.put("canDelete", DateUtil.canDelete(r.getRide().getRideDate()));
+			oneRide.put("price", RideUtil.computePrice(r.getRide(), r.getFromCity().getId(), r.getToCity().getId()));
 			dataToSend.add(oneRide);
 		}
 		return dataToSend;
 	}
-	
-	public String getUserRoad(Ride ride, City from, City to) {
-		boolean betweenFromAndTo = false;
-		String road = "";
-		List<RideCity> cities = ride.getCities();
-		cities.sort(Comparator.comparing(RideCity::getDelay));
-		for (RideCity r : cities) {
-			if(r.getCity().equals(from)) {
-				betweenFromAndTo = true;
-			}
-			if(betweenFromAndTo) {
-				road += r.getCity().getCityName()+" - ";
-			}
-			if(r.getCity().equals(to)) {
-				betweenFromAndTo = false;
-			}
-		}
-		road = road.substring(0, road.length()-3);
-		return road;
-	}
-	
-	public String getProperDepartureDate(String date, City from, List<RideCity> cities) {
-		int delay = 0;
-		for (RideCity r : cities) {
-			if(r.getCity().equals(from)) {
-				delay = r.getDelay();
-				break;
-			}
-		}
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
-		dateTime = dateTime.plusMinutes(delay);
-		return formatter.format(dateTime);
-	}
-	
-	public boolean canDelete(String date) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
-		dateTime = dateTime.minusHours(2);
-		if(LocalDateTime.now().isBefore(dateTime)) {
-			return true;
-		}
-		return false;
-	}
-
 
 	public boolean addRideUser(String login, int rideId, int assembly_place, int destination_place) {
 		

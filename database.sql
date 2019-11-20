@@ -1,4 +1,4 @@
-DROP DATABASE albalbcardb;
+DROP DATABASE IF EXISTS albalbcardb;
 
 CREATE SCHEMA IF NOT EXISTS albalbcardb;
 
@@ -996,7 +996,7 @@ INSERT INTO cities (city_name) VALUES ('Żyrardów');
 INSERT INTO cities (city_name) VALUES ('Żywiec');
 
 insert into rides values (1,2,4,"2019-11-01 10:00:00",120);
-insert into rides_cities values (1,1,1,20,0,0);
-insert into rides_cities values (2,1,3,10,60,0);
-insert into rides_cities values (3,1,4,0,120,0);
+insert into rides_cities values (1,1,1,20,0,1);
+insert into rides_cities values (2,1,3,10,60,1);
+insert into rides_cities values (3,1,4,0,120,1);
 insert into rides_users values (1,1,1,1,4);

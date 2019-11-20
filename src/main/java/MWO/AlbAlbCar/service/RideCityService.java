@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import MWO.AlbAlbCar.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,6 @@ public class RideCityService {
 	RideUsersService rideUsersService;
 
 	public Map<String, String> addStops(Ride ride, Iterator<JsonNode> stops, int priceAll, int assembly_place, int destination_place) {
-		
 		HashMap<String, String> result = new HashMap<String, String>();
 		ArrayList<RideCity> stopsList= new ArrayList<RideCity>();
 		HashSet<Integer> cities = new HashSet<Integer>(); 
@@ -113,7 +113,6 @@ public class RideCityService {
 	}
 	
 	public List<RideCity> stopsBetweenAAndB(int rideId, int assembly_place, int destination_place) {
-		
 		RideCity assemblyCity = rideCityRepository.findyByRideIdAndCityId(rideId, assembly_place);
 		int assemblyDelay = 0;
 		assemblyDelay = assemblyCity.getDelay();
@@ -126,7 +125,6 @@ public class RideCityService {
 	}
 	
 	public boolean isFreeSeatOnRideFromAToB(int rideId, int assembly_place, int destination_place) {
-	
 		int seatsInRide = rideService.getRideById(rideId).getSeats();
 		
 		List<RideCity> stopsList = stopsBetweenAAndB(rideId, assembly_place, destination_place);
@@ -142,23 +140,8 @@ public class RideCityService {
 	public void save(RideCity rc) {
 		rideCityRepository.save(rc);
 	}
-	
-	public double computePrice(Ride ride, int assembly_place, int destination_place) {
-		List<RideCity> cities = ride.getCities();
-		double priceFrom = 0;
-		double priceTo = 0;
-		for(RideCity rideCity: cities) {
-			if(rideCity.getCity().getId() == assembly_place) {
-				priceFrom = rideCity.getPrice();
-			} else if(rideCity.getCity().getId() == destination_place) {
-				priceTo = rideCity.getPrice();
-			}
-		}
-		return priceTo-priceFrom;
-	}
-	
+
 	public int computeFreeSeats(Ride ride, int assembly_place, int destination_place) {
-		
 		int seatsInRide = ride.getSeats();
 		int maxBookedSeats = 0;
 		List<RideCity> stopsList = stopsBetweenAAndB(ride.getRideId(), assembly_place, destination_place);
@@ -168,19 +151,5 @@ public class RideCityService {
 			}
 		}
 		return seatsInRide - maxBookedSeats;
-	}
-	
-	public String getCitiesWithTimeAndSeats(Ride ride) {
-		String road = "";
-		for(int i = 0; i < ride.getCities().size(); i++) {
-			RideCity c = ride.getCities().get(i);
-			if( i < ride.getCities().size() - 1 ) {
-				road += c.getCity().getCityName()+"("+rideUsersService.getProperDepartureDate(ride.getRideDate(), 
-						c.getCity(), ride.getCities())+" Zajętych miejsc: "+c.getPeopleInCar()+") ";
-			} else {
-				road += c.getCity().getCityName();
-			}
-		}
-		return road;
 	}
 }
