@@ -117,7 +117,7 @@ public class RequestController {
 		int rideId = rideData.findValue("rideId").asInt();
 		String login = rideData.findValue("login").asText();
 
-		return rideService.removeRide(rideId, login);
+		return rideService.removeRideByUser(rideId, login);
 	}	
 	
 	@PostMapping(value = "/book-a-ride")

@@ -95,11 +95,7 @@ public class RideUsersService {
 	
 	public boolean hasUserBookedYet(User user, Ride ride) {
 		List<RidesUsers> ridesUser = ridesUsersRepository.getRideUser(user.getUserId(), ride.getRideId());
-		if(ridesUser.size() == 0) {
-			return false;
-		} else {
-			return true;
-		}
+        return ridesUser.size() != 0;
 	}
 	
 }

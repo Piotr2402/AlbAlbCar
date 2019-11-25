@@ -35,8 +35,7 @@ public class JSONUtil {
                 road.append(c.getCity().getCityName()).append("(").append(DateUtil.getProperDepartureDate(ride.getRideDate(),
                         c.getCity(), ride.getCities())).append(" Zajętych miejsc: ").append(c.getPeopleInCar()).append(") ");
             } else {
-                road.append(c.getCity().getCityName()).append("(").append(DateUtil.getProperDepartureDate(ride.getRideDate(),
-                        c.getCity(), ride.getCities())).append(")");
+                road.append(c.getCity().getCityName());
             }
         }
 

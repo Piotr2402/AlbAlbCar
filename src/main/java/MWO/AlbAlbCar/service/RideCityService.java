@@ -117,8 +117,8 @@ public class RideCityService {
 		int assemblyDelay = 0;
 		assemblyDelay = assemblyCity.getDelay();
 			
-		RideCity destinationCity = rideCityRepository.findyByRideIdAndCityId(rideId, destination_place);;
-		int destinationDelay = 0;
+		RideCity destinationCity = rideCityRepository.findyByRideIdAndCityId(rideId, destination_place);
+        int destinationDelay = 0;
 		destinationDelay = destinationCity.getDelay();
 		
 		return rideCityRepository.getStopsBetweenDelays(rideId,assemblyDelay,destinationDelay);

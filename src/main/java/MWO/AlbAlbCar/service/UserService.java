@@ -1,9 +1,6 @@
 package MWO.AlbAlbCar.service;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -12,7 +9,9 @@ import org.springframework.stereotype.Service;
 import MWO.AlbAlbCar.model.Role;
 import MWO.AlbAlbCar.model.User;
 import MWO.AlbAlbCar.repository.UserRepository;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 public class UserService {
 
@@ -33,9 +32,14 @@ public class UserService {
 			return result;
 		}
 
+		if (!user.isEnabled()) {
+			result.put("result", "user is blocked");
+			return result;
+		}
+
 		Set<Role> roles = user.getRoles();
 		for (Role role : roles)
-			result.put("result",role.getUserRole());
+			result.put("result", role.getUserRole());
 		return result;
 	}
 
@@ -67,5 +71,25 @@ public class UserService {
 
 	public User getUserByLogin(String login) {
 		return userRepository.getUserByLogin(login);
+	}
+
+	public int getUserRole(String login) {
+		return userRepository.getUserRole(login);
+	}
+
+	public List<User> getUsersByLoginContaining(String login) {
+		return userRepository.findAllByLoginContaining(login);
+	}
+
+	public List<User> getAllUsers() {
+		return userRepository.findAll();
+	}
+
+	public int blockUser(String login) {
+		return userRepository.blockUserByLogin(login);
+	}
+
+	public int unblockUser(String login) {
+		return userRepository.unblockUserByLogin(login);
 	}
 }

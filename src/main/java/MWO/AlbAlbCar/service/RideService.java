@@ -19,6 +19,7 @@ import MWO.AlbAlbCar.model.User;
 import MWO.AlbAlbCar.repository.RideRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 public class RideService {
 	
@@ -85,8 +86,20 @@ public class RideService {
 		return rideRepository.save(ride);
 	}
 
-	@Transactional
-	public Map<String, Object> removeRide(int rideID, String login) {
+	public void removeRide(int rideID) {
+		Optional<Ride> oRide = rideRepository.findById(rideID);
+
+		if (oRide.isPresent()) {
+			Ride ride = oRide.get();
+
+			ridesUsersRepository.deleteByRide(ride);
+			rideCityRepository.deleteByRide(ride);
+			rideRepository.deleteById(rideID);
+		}
+	}
+
+
+	public Map<String, Object> removeRideByUser(int rideID, String login) {
 		Map<String, Object> response = new HashMap<String, Object>();
 
 		Optional<Ride> oRide = rideRepository.findById(rideID);
@@ -99,9 +112,7 @@ public class RideService {
 				LocalDateTime rideDateTime = LocalDateTime.parse(ride.getRideDate(), formatter);
 				rideDateTime = rideDateTime.minusHours(2);
 				if (LocalDateTime.now().isBefore(rideDateTime)) {
-					ridesUsersRepository.deleteByRide(ride);
-					rideCityRepository.deleteByRide(ride);
-					rideRepository.deleteById(rideID);
+					removeRide(rideID);
 					response.put("result", "success");
 				} else {
 					response.put("result", "fail");
