@@ -29,6 +29,9 @@ if(!isset($_SESSION['login']) || empty($_SESSION['login'])) {
                 };
                 formSubmit(data, "cancel-trip", $(this).find("span") , () => {
                     alert($(this).find("span").text());
+                    if($(this).find("span").text() == "Twoje miejsce zostało zwolnione!") {
+                        location.reload();
+                    }
                 });
             });
         });

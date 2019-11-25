@@ -1,6 +1,4 @@
-$(document).on("click", ".ride-reservation", function(e) {
-    alert($(this).attr("data-rideid"));
-});
+
 
 $("#start-time").on('click', function() {
     $('#start-time-calendar').slideDown();

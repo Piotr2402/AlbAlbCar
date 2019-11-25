@@ -1,5 +1,4 @@
 <?php
-//todo sprawdzenie i ogarnac postoje
 include("../modules/utilities.php");
 session_start();
 

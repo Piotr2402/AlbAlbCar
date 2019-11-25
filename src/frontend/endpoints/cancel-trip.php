@@ -15,16 +15,16 @@ if(!isset($_POST['rideId'])) {
     exit();
 }
 
-$url = 'http://localhost:8080/remove-ride';
+$url = 'http://localhost:8080/resign-from-trip';
 $req = [
     'login' => $_SESSION['login'],
-    'rideId' => $_POST['rideId'].'1'
+    'rideId' => $_POST['rideId']
 ];
 
 $result = utilities::post($url, $req);
 $result = json_decode($result, true);
 
-if(isset($result['result']) && $result['result'] == 'success') {
+if(isset($result['resigned']) && $result['resigned'] == 'success') {
     echo 'Twoje miejsce zostało zwolnione!';
 } else if(isset($result['result'])) {
     echo $result['message'];

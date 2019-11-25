@@ -25,6 +25,7 @@ if(!isset($_SESSION['login']) || empty($_SESSION['login'])) {
 </form>
 
 <div id="rides" class="mt-5" style="display: none;"></div>
+<div id="new-ride-info" class="d-none"></div>
 
 <?php
 $script = '
@@ -44,7 +45,28 @@ $script = '
                 };
                 formSubmit(data, "search-trip", "#rides", () => {});
                 $("#rides").slideDown();
+                $("#rides").attr("data-from", $("#assembly-place").val());
+                $("#rides").attr("data-to", $("#destination-place").val());
             });
+            
+            $(document).on("click", ".ride-reservation", function(e) {
+                let data = {
+                    assembly_place: $("#rides").attr("data-from"),
+                    destination_place: $("#rides").attr("data-to"),
+                    rideId: $(this).attr("data-rideid")
+                };
+                console.log(data);
+                formSubmit(data, "reserve-trip", "#new-ride-info", () => {
+                    if($("#new-ride-info").text() == "Zostałeś zapisany na przejazd!") {
+                        $("#new-ride-info").addClass("d-none");
+                        alert("Zostałeś zapisany na przejazd!");
+                        location.reload();
+                    } else {
+                        alert($("#new-ride-info").text());
+                    }
+                });
+            });
+            
         });
         
     ';

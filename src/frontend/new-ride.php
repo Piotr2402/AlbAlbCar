@@ -47,7 +47,6 @@ if(!isset($_SESSION['login']) || empty($_SESSION['login'])) {
     <input type="text" class="form-control via-place-price" />
 </div>
 
-
 <?php
 $script = '
         $(() => {
@@ -66,8 +65,18 @@ $script = '
                 price: $("#place-price").val(),
                 destination_place: $("#destination-place").val(),
                 departure_datetime: $("#start-time").val(),
-                stops: {}
+                stops: []
             };
+            let stopObjects = $(".via-places > .via-place");
+            for(let i=0; i<stopObjects.length; ++i) {
+                let stop = {
+                    cityId: $(stopObjects).eq(i).find(".via-place-city").val(),
+                    delay: $(stopObjects).eq(i).find(".via-place-time").val(),
+                    price: $(stopObjects).eq(i).find(".via-place-price").val(),
+                }
+                data.stops.push(stop);
+            }
+            
             formSubmit(data, "new-ride", "#new-ride-form-info", () => {
                 if($("#new-ride-form-info").text() == "Przejazd został dodany!") {
                     $("#new-ride-form-info").addClass("d-none");
