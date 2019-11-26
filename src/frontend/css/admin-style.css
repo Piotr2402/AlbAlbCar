@@ -1,0 +1,30 @@
+table {
+    width: 100%;
+    border: 1px solid #343A40;
+    border-collapse: collapse;
+    text-align: center;
+}
+table thead {
+    border-bottom: 1px solid #343A40;
+    font-weight: 700;
+}
+
+#admin-rides-search-result td.track {
+    max-width: 400px;
+}
+@media (max-width: 767px) {
+    table tr {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 5px;
+        justify-content: space-between;
+    }
+    table tr td {
+        line-height: 18px;
+        margin-right: 10px;
+    }
+    table tr td:nth-of-type(odd) {
+        background: #343a40;
+        color: #fff;
+    }
+}

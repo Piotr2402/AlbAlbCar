@@ -1,0 +1,6 @@
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.\/]+)$ $1.php [NC,L]
+RewriteRule ^([^\.\/]+)/([1-9][0-9]*)$ $1.php?site=$2 [NC,L]
+RewriteRule ^([^\.\/]+)/([1-9][0-9]*)/([1-9][0-9]*)$ $1.php?site1=$2&site2=$3 [NC,L]

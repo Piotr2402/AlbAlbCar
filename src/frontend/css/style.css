@@ -1,0 +1,109 @@
+* {
+    font-family: 'Raleway', sans-serif;
+}
+#albalbcar-form {
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    background: #efefef;
+}
+#albalbcar-form select {
+    max-width: 400px;
+}
+
+.navbar-brand {
+    text-align: center;
+}
+.navbar-brand .car {
+    font-size: 40px;
+    transform: translateY(-10px);
+    line-height: 25px;
+}
+#rides {
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    background: #efefef;
+    padding: 30px;
+}
+.ride {
+    background: #eee;
+    padding: 10px 20px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.3);
+    margin-bottom: 10px;
+    transition: .5s ease-in-out background;
+}
+.ride:last-of-type {
+    margin-bottom: 0;
+}
+.ride:hover {
+    background: rgba(0,0,0,0.1);
+}
+.ride .left-col {
+    flex: 1 0;
+}
+.ride .right-col {
+    flex: 0 1;
+}
+.ride p {
+    margin-bottom: 0;
+}
+.ride .btn {
+    cursor: pointer;
+}
+
+#new-ride {
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    background: #efefef;
+    padding: 30px;
+}
+#new-ride select, #new-ride input {
+    max-width: 400px;
+    display: block;
+    margin: 0 auto;
+}
+#new-ride .add-via-place {
+    cursor: pointer;
+}
+#start-time-calendar {
+    display: none;
+    margin-top: 10px;
+}
+.via-place {
+    box-shadow: 0 0 10px #777;
+    border-radius: 10px;
+    padding: 5px 10px;
+    max-width: 400px;
+    margin: 0 auto 10px;
+    position: relative;
+}
+.via-place-remove {
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    cursor: pointer;
+}
+h3.main-header {
+    text-align: center;
+    font-size: 22px;
+    text-transform: uppercase;
+}
+
+@media(max-width: 767px) {
+    #rides h3, #rides h4 {
+        font-size: 20px;
+    }
+    #rides {
+        padding: 10px;
+    }
+    #rides .ride {
+        padding: 5px 10px;
+    }
+}
+@media (min-width: 992px) {
+
+    .navbar-brand {
+        position: absolute;
+        background: #343a40;
+        padding: 15px 20px 10px;
+        top: 20px;
+        box-shadow: 0 0 10px #fff;
+        border-radius: 20px;
+    }
+}
