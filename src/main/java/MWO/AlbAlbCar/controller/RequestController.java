@@ -109,7 +109,10 @@ public class RequestController {
 		User driver = userService.getUserByLogin(login);
 		Ride ride = rideService.addRide(driver,seats,price,departure_datetime);
 		
-		return rideCityService.addStops(ride,stops,price,assembly_place,destination_place);	
+		 Map<String, String> result = rideCityService.addStops(ride,stops,price,assembly_place,destination_place);	
+		 if(result.get("result").equals("fail"))
+			 rideService.removeRide(ride.getRideId());
+		return result; 
 	}
 
 	@PostMapping(value = "/remove-ride")
