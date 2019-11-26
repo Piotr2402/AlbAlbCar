@@ -18,7 +18,7 @@ if(!isset($_SESSION['login']) || empty($_SESSION['login'])) {
         <?php } ?>
     </select>
     <p class="mt-2 mb-0">Cena za miejsce</p>
-    <input type="text" class="form-control" id="place-price" name="price" />
+    <input type="text" class="form-control" id="place-price" name="price" required/>
     <p class="mt-2 mb-0">Godzina wyjazdu</p>
     <input id="start-time" type="text" name="departure-datetime" class="form-control" readonly value="<?= date("Y-m-d H:i") ?>" />
     <div id="start-time-calendar" data-timepicker="true" data-language='en'></div>
@@ -44,7 +44,7 @@ if(!isset($_SESSION['login']) || empty($_SESSION['login'])) {
         <?php } ?>
     </select>
     <p class="mt-2 mb-0">Cena do miejsca docelowego</p>
-    <input type="text" class="form-control via-place-price" />
+    <input type="text" class="form-control via-place-price" required/>
 </div>
 
 <?php

@@ -17,11 +17,11 @@
         <form action="./endpoints/login.php" method="post">
             <div class="form-group">
                 <label for="login">Login</label>
-                <input type="text" class="form-control" name="login" placeholder="Twój login">
+                <input type="text" class="form-control" name="login" placeholder="Twój login" required>
             </div>
             <div class="form-group">
                 <label for="password">Hasło</label>
-                <input type="password" class="form-control" name="password" placeholder="Hasło">
+                <input type="password" class="form-control" name="password" placeholder="Hasło" required>
             </div>
             <div class="form-text text-info font-weight-bold"><?= isset($_SESSION['login-info']) ? $_SESSION['login-info'] : '' ?></div>
             <?php unset($_SESSION['login-info']); ?>
@@ -33,19 +33,19 @@
         <form action="./endpoints/register.php" method="post">
             <div class="form-group">
                 <label for="login">Login</label>
-                <input type="text" class="form-control" name="login" placeholder="Twój login">
+                <input type="text" class="form-control" name="login" placeholder="Twój login" required>
             </div>
             <div class="form-group">
                 <label for="phone">Telefon</label>
-                <input type="tel" class="form-control" name="phone" placeholder="Telefon">
+                <input type="tel" class="form-control" name="phone" placeholder="Telefon" required>
             </div>
             <div class="form-group">
                 <label for="password">Hasło</label>
-                <input type="password" class="form-control" name="password1" placeholder="Hasło">
+                <input type="password" class="form-control" name="password1" placeholder="Hasło"required>
             </div>
             <div class="form-group">
                 <label for="password">Powtórz hasło</label>
-                <input type="password" class="form-control" name="password2" placeholder="Powtórz hasło">
+                <input type="password" class="form-control" name="password2" placeholder="Powtórz hasło" required>
             </div>
             <div class="form-text text-info font-weight-bold"><?= isset($_SESSION['register-info']) ? $_SESSION['register-info'] : '' ?></div>
             <?php unset($_SESSION['register-info']); ?>
